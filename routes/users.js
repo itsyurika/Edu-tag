@@ -9,6 +9,14 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+
+  router.use((req, res, next) => {
+    if() {
+      next();
+    }
+    res.send("Unauthorized Access");
+  })
+
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
