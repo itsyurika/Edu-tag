@@ -10,6 +10,7 @@ const router  = express.Router();
 const userQueries = require('../db/user_queries');
 const bcrypt = require('bcrypt');
 const db = require('../db/db_connect');
+const { user } = require('pg/lib/defaults');
 
 
 //**? put it there for possible future use - user routes gate filter (delete if unused) */
@@ -19,7 +20,7 @@ const db = require('../db/db_connect');
       next();
     }
     // res.send("Unauthorized Access");
-  })
+  });
 
   // get all users
   router.get("/", (req, res) => {
@@ -42,7 +43,7 @@ const db = require('../db/db_connect');
   });
 
   // /register
-  router.get("/resiter", (req, res) => {
+  router.get("/regiter", (req, res) => {
   });
 
   // /myprofile
@@ -58,6 +59,7 @@ const db = require('../db/db_connect');
         res.send({error: "no user with that id"});
         return;
       }
+      //! Please replace the following code to reflect logged in user's profile page
       res.json(user)
     })
     .catch((err) => {
@@ -65,6 +67,25 @@ const db = require('../db/db_connect');
       res.send(err);
     })
   });
+
+  // /:id
+  router.get("/:otherUserName", (req, res) => {
+    const otherUserName = req.params.otherUserName;
+    const userId = req.session.userId;
+    let myName;
+    userQueries.getUserById(userId)
+    .then(user => {
+      myName = user.name;
+    })
+    //If the logged in user visits their own username page redirect to my wall page?
+    if(otherUserName === myName) {
+      res.redirect("/myprofile"); //**? UPDATE this with my wall page */
+    }
+    userQueries.getUserByName(otherUserName)
+    .then(user => {
+      //? Implement Other user's wall page //
+    })
+  })
 
   //POST routes
 
@@ -105,11 +126,26 @@ const db = require('../db/db_connect');
     })
   });
 
+  //Edit profile
+  router.post("/myprofile", (req, res) => {
+  const userId = req.session.userId;
+  const newName = req.body.newName;
+  if(!userId) {
+    res.send({message: "not logged in"});
+    return;
+  }
+  console.log("from the post route - userid and name: ", userId, newName);
+  userQueries.editProfile(userId, newName)
+  .then((user) => {
+    res.json(user);
+  })
+  });
+
   //Logout
-  router.post('/logout', (req, res) => {
+  router.post("/logout", (req, res) => {
     req.session.userId = null;
     //*! Please replace the following code w action after successful logout - redirection to non-logged in resource wall?
     res.send({});
-  })
+  });
 
 module.exports = router;

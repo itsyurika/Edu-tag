@@ -1,5 +1,6 @@
 const db = require('./db_connect');
 const bcrypt = require('bcrypt');
+const res = require('express/lib/response');
 
 
 const getAllUsers = () => {
@@ -43,8 +44,26 @@ const getUserById = function(id) {
       console.log(err);
       return null;
     });
-
 };
+
+/**
+ * Fetches a specific user using the user name handle. Uses req.params and should be used to redirect to the requested user's wall page.
+ * ? need to check if it's used/implemented
+ * @param {string} name
+ * @returns
+ */
+const getUserByName = function(name) {
+  const queryString = `SELECT * FROM users WHERE users.id = $1`;
+  return db
+     .query(queryString, [`${name}`])
+    .then(user => {
+      return user.rows[0];
+    })
+    .catch(err => {
+      console.log(err);
+      return null;
+    });
+}
 
 /**
  * Check if a user exists with a given username and password
@@ -60,6 +79,10 @@ const login = (email, password) => {
         return user;
       }
       return null;
+    })
+    .catch((err) => {
+      console.log("error from login :", err.message);
+      res.status(500).send("error while loging in");
     })
 }
 
@@ -82,14 +105,40 @@ const login = (email, password) => {
     })
     .catch((err) => {
       console.log("error while executing addUser fxn: ", err.message);
+      res.status(500).send('error while adding a new user');
     });
 };
+
+
+/**
+ * Edit name of user profile
+ * @param {integer} id
+ * @param {string} newName
+ * @returns
+ */
+const editProfile = function(id, newName) {
+  const queryString = `UPDATE users SET name = $2 WHERE id = $1 RETURNING *;`;
+  const value = [`${id}`, `${newName}`];
+  console.log("input values (id , newName): ", value);
+  return db
+    .query(queryString, value)
+    .then((result) => {
+      console.log("updated profile : ", result.rows[0]);
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log("error while editing profile: ", err.message);
+      res.status(500).send('error while editing profile');
+    })
+}
 
 module.exports = {
   //name all the functions here
   getAllUsers,
   getUserByEmail,
   getUserById,
+  getUserByName,
   addUser,
-  login
+  login,
+  editProfile
 }
