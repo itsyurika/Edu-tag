@@ -1,5 +1,6 @@
-const { Querystring } = require('request/lib/querystring');
 const db = require('./db_connect');
+const bcrypt = require('bcrypt');
+
 
 const getUsers = () => {
   return db.query('SELECT * FROM users;')
@@ -15,11 +16,14 @@ const getUsers = () => {
  */
 
 const getUserByEmail = (email) => {
-  const queryString = 'SELECT * FROM users WHERE users.email = $1;'
+  const queryString = 'SELECT * FROM users WHERE users.email = $1;';
   return db
   .query(queryString, [email])
   .then((user) => {
     return user.rows[0];
+  })
+  .catch((err) => {
+    console.log("error during getUserByEmail fxn", err);
   })
 }
 
@@ -30,9 +34,9 @@ const getUserByEmail = (email) => {
  * @returns {Promise<{matching user object}>}
  */
 const login = (email, password) => {
-  return userQueries.getUserByEmail(email)
+  return getUserByEmail(email)
     .then((user) => {
-      console.log(user);
+      console.log("at login fxn: ", user);
       if(bcrypt.compareSync(password, user.password)) {
         return user;
       }

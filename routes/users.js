@@ -10,7 +10,6 @@ const router  = express.Router();
 const userQueries = require('../db/user_queries');
 const bcrypt = require('bcrypt');
 const db = require('../db/db_connect');
-const { login } = require('../../LightBnB/LightBnB_WebApp-master/server/userRoutes');
 
 
 //**? put it there for possible future use - user routes gate filter (delete if unused) */
@@ -87,9 +86,11 @@ const { login } = require('../../LightBnB/LightBnB_WebApp-master/server/userRout
 
   //Logging in with an existing account
   router.post("/login", (req, res) => {
+    console.log("req.body:", req.body);
     const {password, email} = req.body;
-    login(email, password)
+    userQueries.login(email, password)
     .then((user) => {
+      console.log("after successful login fxn, at .then ", user);
       if(!user) {
         res.send({error: "authentication error"});
         return;

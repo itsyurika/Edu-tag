@@ -1,12 +1,12 @@
 INSERT INTO users (name, email, password)
-VALUES ('Alice', 'alice@email.com', 'password'), ('Bobby', 'bobby@email.com', 'password'), ('Leslie', 'Dena.Gibson94@gmail.com', 'password'),
-('Esperanza', 'Precious29@gmail.com', 'password'),
-('Mason', 'Americo.Becker@gmail.com', 'password'),
-('Lisette', 'Norbert_Hagenes@yahoo.com', 'password'),
-('Sierra', 'Valentine_Walsh94@gmail.com', 'password'),
-('Zechariah', 'Queen_Reichert@hotmail.com', 'password'),
-('Carmelo', 'Janice83@gmail.com', 'password'),
-('Zoie', 'Amelie57@yahoo.com', 'password'),
-('Clair', 'Vidal_Sipes@yahoo.com', 'password'),
-('Dalton', 'Fanny.Deckow43@hotmail.com', 'password');
+VALUES ('Alice', 'alice@email.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'), ('Bobby', 'bobby@email.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'), ('Leslie', 'Dena.Gibson94@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Esperanza', 'Precious29@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Mason', 'Americo.Becker@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Lisette', 'Norbert_Hagenes@yahoo.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Sierra', 'Valentine_Walsh94@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Zechariah', 'Queen_Reichert@hotmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Carmelo', 'Janice83@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Zoie', 'Amelie57@yahoo.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Clair', 'Vidal_Sipes@yahoo.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
+('Dalton', 'Fanny.Deckow43@hotmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u');
 
