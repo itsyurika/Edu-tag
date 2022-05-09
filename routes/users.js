@@ -11,7 +11,7 @@ const router  = express.Router();
 module.exports = (db) => {
 
   router.use((req, res, next) => {
-    if() {
+    if(true) {
       next();
     }
     res.send("Unauthorized Access");
