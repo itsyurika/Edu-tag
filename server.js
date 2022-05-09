@@ -64,9 +64,15 @@ app.use("/widgets", resourceRoutes);
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
+const randomUser = require('./db/faker');
 
 app.get("/", (req, res) => {
-  res.render("index");
+  // res.render("index");
+  const output = [];
+  for (let i = 0; i < 10; i++) {
+    output.push(randomUser());
+  }
+  res.send(output);
 });
 
 app.listen(PORT, () => {

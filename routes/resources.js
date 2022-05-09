@@ -11,10 +11,12 @@ const resourceQueries = require('../db/resource_queries');
 
 //**? put it there for possible future use - resource routes gate filter (delete if unused)*/
 router.use((req, res, next) => {
-  if(true) {
-    next();
+  const userId = req.session.userId;
+  if(!userId) {
+    res.send({message: "not logged in"});
+    return;
   }
-  res.send("Unauthorized Access");
+  next();
 })
 
 //GET EXAMPLE
