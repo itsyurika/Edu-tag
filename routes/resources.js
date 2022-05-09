@@ -7,8 +7,17 @@
 
 const express = require('express');
 const router  = express.Router();
+const resourceQueries = require('../db/resource_queries');
 
-module.exports = (db) => {
+//**? put it there for possible future use - resource routes gate filter (delete if unused)*/
+router.use((req, res, next) => {
+  if(true) {
+    next();
+  }
+  res.send("Unauthorized Access");
+})
+
+//GET EXAMPLE
   router.get("/", (req, res) => {
     let query = `SELECT * FROM widgets`;
     console.log(query);
@@ -23,5 +32,9 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  return router;
-};
+
+//GET mywall
+//get resource
+//.... what else ....
+
+module.exports = router;

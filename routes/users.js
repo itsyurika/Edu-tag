@@ -7,16 +7,18 @@
 
 const express = require('express');
 const router  = express.Router();
+const userQueries = require('../db/user_queries');
 
-module.exports = (db) => {
-
+//**? put it there for possible future use - user routes gate filter (delete if unused) */
   router.use((req, res, next) => {
     if(true) {
+      console.log("passing through filter gate");
       next();
     }
-    res.send("Unauthorized Access");
+    // res.send("Unauthorized Access");
   })
 
+  // GET EXAMPLE
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -29,5 +31,67 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  return router;
-};
+
+  // GET /login
+  router.get("/login", (req, res) => {
+    userQueries.getUserByEmail(req.params.email)
+    .then((user) => {
+      res.json(user)
+    })
+    .catch((err) => {
+      console.log("error : ", err);
+      res.status(500).json({error_occurred: err.message});
+    })
+  });
+
+  // GET /register
+  router.get("/resiter", (req, res) => {
+    userQueries.getUserByEmail(req.params.email)
+    .then((user) => {
+      res.json(user)
+    })
+    .catch((err) => {
+      console.log("error : ", err);
+      res.status(500).json({error_occurred: err.message});
+    })
+  });
+
+//POST /login
+
+  router.post("/login", (req, res) => {
+    userQueries.getUserByEmail(req.params.email)
+    .then((user) => {
+      res.json(user)
+    })
+    .catch((err) => {
+      console.log("error : ", err);
+      res.status(500).json({error_occurred: err.message});
+    })
+  });
+
+//POST /regiter
+
+  router.post("/login", (req, res) => {
+    userQueries.getUserByEmail(req.params.email)
+    .then((user) => {
+      res.json(user)
+    })
+    .catch((err) => {
+      console.log("error : ", err);
+      res.status(500).json({error_occurred: err.message});
+    })
+  });
+
+
+  router.post("/register", (req, res) => {
+    userQueries.getUserByEmail(req.params.email)
+    .then((user) => {
+      res.json(user)
+    })
+    .catch((err) => {
+      console.log("error : ", err);
+      res.status(500).json({error_occurred: err.message});
+    })
+  });
+
+module.exports = router;
