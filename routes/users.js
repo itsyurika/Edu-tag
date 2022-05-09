@@ -21,7 +21,7 @@ const db = require('../db/db_connect');
     // res.send("Unauthorized Access");
   })
 
-  // GET EXAMPLE
+  // get all users
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -39,26 +39,10 @@ const db = require('../db/db_connect');
 
   // /login
   router.get("/login", (req, res) => {
-    userQueries.getUserByEmail(req.params.email)
-    .then((user) => {
-      res.json(user)
-    })
-    .catch((err) => {
-      console.log("error : ", err);
-      res.status(500).json({error_occurred: err.message});
-    })
   });
 
   // /register
   router.get("/resiter", (req, res) => {
-    userQueries.getUserByEmail(req.params.email)
-    .then((user) => {
-      res.json(user)
-    })
-    .catch((err) => {
-      console.log("error : ", err);
-      res.status(500).json({error_occurred: err.message});
-    })
   });
 
   // /myprofile
@@ -68,7 +52,7 @@ const db = require('../db/db_connect');
       res.send({message: "not logged in"});
       return;
     }
-    db.getUserByEmail(userId)
+    userQueries.getUserById(userId)
     .then(user => {
       if(!user) {
         res.send({error: "no user with that id"});
@@ -122,7 +106,7 @@ const db = require('../db/db_connect');
   });
 
   //Logout
-  router.post('./logout', (req, res) => {
+  router.post('/logout', (req, res) => {
     req.session.userId = null;
     //*! Please replace the following code w action after successful logout - redirection to non-logged in resource wall?
     res.send({});

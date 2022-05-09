@@ -2,7 +2,7 @@ const db = require('./db_connect');
 const bcrypt = require('bcrypt');
 
 
-const getUsers = () => {
+const getAllUsers = () => {
   return db.query('SELECT * FROM users;')
     .then((response) => {
       return response.rows;
@@ -10,7 +10,7 @@ const getUsers = () => {
 }
 
 /**
- * Fetches a specific user using email input from db
+ * Fetches a specific user using email input from db for login check
  * @param {*} email
  * @returns {Promise<{}>} //*? check and update if needed
  */
@@ -26,6 +26,25 @@ const getUserByEmail = (email) => {
     console.log("error during getUserByEmail fxn", err);
   })
 }
+
+/**
+ * Fetches specific user using session id from db for my profile page
+ * @param {*} id
+ * @returns
+ */
+const getUserById = function(id) {
+  const queryString = `SELECT * FROM users WHERE users.id = $1`;
+  return db
+    .query(queryString, [`${id}`])
+    .then(user => {
+      return user.rows[0];
+    })
+    .catch(err => {
+      console.log(err);
+      return null;
+    });
+
+};
 
 /**
  * Check if a user exists with a given username and password
@@ -58,8 +77,8 @@ const login = (email, password) => {
   return db
     .query(queryString,value)
     .then((result) => {
-      console.log("new user data:", result.rows);
-      return result.rows;
+      console.log("new user data:", result.rows[0]);
+      return result.rows[0];
     })
     .catch((err) => {
       console.log("error while executing addUser fxn: ", err.message);
@@ -68,8 +87,9 @@ const login = (email, password) => {
 
 module.exports = {
   //name all the functions here
-  getUsers,
+  getAllUsers,
   getUserByEmail,
+  getUserById,
   addUser,
   login
 }
