@@ -15,10 +15,10 @@ main {
       #c8cec4 100%);
 }
 
-h1 {
-  display: flex;
-  justify-content: center;
-}
+// h1 {
+//   display: flex;
+//   justify-content: center;
+// }
 
 nav {
   display: flex;
@@ -60,4 +60,13 @@ nav {
   padding-bottom: 4px;
   padding-top: 4px;
   padding-left: 18px;
+}
+
+// .row-gap {
+//   margin-top: 20px;
+//   background-color: black;
+// }
+
+.card {
+  margin-top: 20px;
 }
