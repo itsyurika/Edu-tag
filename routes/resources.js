@@ -1,6 +1,6 @@
 /*
  * All routes for Widgets are defined here
- * Since this file is loaded in server.js into api/widgets,
+ * Since this file is loaded in server.js into /resources,
  *   these routes are mounted onto /widgets
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
@@ -42,6 +42,7 @@ const resourceQueries = require('../db/resource_queries');
     const userId = req.session.userId;
     if(!userId) {
     res.send({message: "not logged in "});
+    //! update with action for redirecting to log in
     return;
     }
     console.log(`user is logged in as ${userId}, continuing w the next task`);

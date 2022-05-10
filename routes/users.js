@@ -46,7 +46,7 @@ const { user } = require('pg/lib/defaults');
   router.get("/regiter", (req, res) => {
   });
 
-  // /myprofile
+  // accessing my profile page to update my info
   router.get("/myprofile", (req, res) => {
     const userId = req.session.userId;
     if(!userId) {
@@ -68,7 +68,7 @@ const { user } = require('pg/lib/defaults');
     })
   });
 
-  // /:id
+  // other user's wall
   router.get("/:otherUserName", (req, res) => {
     const otherUserName = req.params.otherUserName;
     const userId = req.session.userId;
