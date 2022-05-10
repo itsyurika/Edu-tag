@@ -1,13 +1,2 @@
-
-DROP TABLE IF EXISTS resources_reviews CASCADE;
-CREATE TABLE resources_reviews (
-  id SERIAL PRIMARY KEY NOT NULL,
-  resource_id INT REFERENCES resources(id) ON DELETE CASCADE,
-  reviewer_id INT REFERENCES users(id) ON DELETE CASCADE,
-  rating SMALLINT,
-  message TEXT,
-  liked BOOLEAN DEFAULT FALSE
-);
-
-INSERT INTO resources_reviews ()
-VALUES ()
+INSERT INTO resources_reviews (resource_id, reviewer_id, rating, message, liked)
+VALUES (12, 2, 5, 'This is such a useful website!! Thanks for sharing!', TRUE);
