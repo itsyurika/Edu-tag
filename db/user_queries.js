@@ -1,6 +1,5 @@
 const db = require('./db_connect');
 const bcrypt = require('bcrypt');
-const res = require('express/lib/response');
 
 
 const getAllUsers = () => {
@@ -12,7 +11,7 @@ const getAllUsers = () => {
 
 /**
  * Fetches a specific user using email input from db for login check
- * @param {*} email
+ * @param {VARCHAR} email
  * @returns {Promise<{}>} //*? check and update if needed
  */
 
@@ -30,7 +29,7 @@ const getUserByEmail = (email) => {
 
 /**
  * Fetches specific user using session id from db for my profile page
- * @param {*} id
+ * @param {INTEGER} id
  * @returns
  */
 const getUserById = function(id) {
@@ -82,7 +81,6 @@ const login = (email, password) => {
     })
     .catch((err) => {
       console.log("error from login :", err.message);
-      res.status(500).send("error while loging in");
     })
 }
 
@@ -105,7 +103,6 @@ const login = (email, password) => {
     })
     .catch((err) => {
       console.log("error while executing addUser fxn: ", err.message);
-      res.status(500).send('error while adding a new user');
     });
 };
 
@@ -116,9 +113,9 @@ const login = (email, password) => {
  * @param {string} newName
  * @returns
  */
-const editProfile = function(id, newName) {
-  const queryString = `UPDATE users SET name = $2 WHERE id = $1 RETURNING *;`;
-  const value = [`${id}`, `${newName}`];
+const editProfile = function(id, newEmail) {
+  const queryString = `UPDATE users SET email = $2 WHERE id = $1 RETURNING *;`;
+  const value = [`${id}`, `${newEmail}`];
   console.log("input values (id , newName): ", value);
   return db
     .query(queryString, value)
@@ -128,7 +125,6 @@ const editProfile = function(id, newName) {
     })
     .catch((err) => {
       console.log("error while editing profile: ", err.message);
-      res.status(500).send('error while editing profile');
     })
 }
 

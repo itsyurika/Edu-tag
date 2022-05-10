@@ -58,7 +58,7 @@ const resourceRoutes = require("./routes/resources");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/users", usersRoutes);
-app.use("/widgets", resourceRoutes);
+app.use("/resources", resourceRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page

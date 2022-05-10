@@ -46,7 +46,7 @@ const { user } = require('pg/lib/defaults');
   router.get("/regiter", (req, res) => {
   });
 
-  // /myprofile
+  // accessing my profile page to update my info
   router.get("/myprofile", (req, res) => {
     const userId = req.session.userId;
     if(!userId) {
@@ -68,7 +68,7 @@ const { user } = require('pg/lib/defaults');
     })
   });
 
-  // /:id
+  // other user's wall
   router.get("/:otherUserName", (req, res) => {
     const otherUserName = req.params.otherUserName;
     const userId = req.session.userId;
@@ -129,13 +129,13 @@ const { user } = require('pg/lib/defaults');
   //Edit profile
   router.post("/myprofile", (req, res) => {
   const userId = req.session.userId;
-  const newName = req.body.newName;
+  const newEmail = req.body.newEmail;
   if(!userId) {
     res.send({message: "not logged in"});
     return;
   }
   console.log("from the post route - userid and name: ", userId, newName);
-  userQueries.editProfile(userId, newName)
+  userQueries.editProfile(userId, newEmail)
   .then((user) => {
     res.json(user);
   })
