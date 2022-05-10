@@ -1,0 +1,9 @@
+
+DROP TABLE IF EXISTS tags CASCADE;
+CREATE TABLE tags (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL
+);
+
+INSERT INTO tags (name)
+VALUES ('HTML'), ('CSS'), ('JS'), ('Design');
