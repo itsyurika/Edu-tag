@@ -9,35 +9,7 @@ const express = require('express');
 const router  = express.Router();
 const resourceQueries = require('../db/resource_queries');
 
-//**? will need to change to not filter when not logged in && visiting other user's wall
-  router.use((req, res, next) => {
-  const userId = req.session.userId;
-  if(!userId) {
-    res.send({message: "not logged in "});
-    return;
-  }
-  console.log("user is logged in")
-  next();
-})
-
-//GET EXAMPLE
-  router.get("/", (req, res) => {
-    let query = `SELECT * FROM widgets`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const widgets = data.rows;
-        res.json({ widgets });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
 // My Resources Wall Route
-
   router.get("/mywall", (req, res) => {
     const userId = req.session.userId;
     if(!userId) {
@@ -79,7 +51,7 @@ const resourceQueries = require('../db/resource_queries');
 //  Tag Search
   router.get("/", (req, res) => {
     // whether a user is logged in or not, /resources page will show the popular / highest rating resources
-    const searchTag = req.query;
+    const {searchTag} = req.body; //? or use req.query?
     resourceQueries.getResourceByTag(searchTag, 15)
     .then((resources) => {
       //! render the main body with all the resources returned
@@ -93,7 +65,7 @@ const resourceQueries = require('../db/resource_queries');
 
 // Individual Resource Card
   router.get("/:resourceId", (req, res) => {
-    const resourceId = req.params;
+    const resourceId = req.params.resourceId;
     resourceQueries.getResourceById(resourceId)
     .then((resources) => {
       //! render single resource page w the returned resource data
@@ -118,8 +90,9 @@ const resourceQueries = require('../db/resource_queries');
     resourceQueries.addResource({...req.body, creator_id: userId})
     .then((resource) => {
       //redirecting it to the single resource page the newly created card
-      const resourceId = resource.id;
-      res.redirect(`/${resourceId}`);
+      const resourceId = Number(resource.id);
+      console.log("this is the resourceID : ", resourceId);
+      res.redirect(`/resources/${resourceId}`);
     })
     .catch((err) => {
       console.log("error while posting a new resource card")
@@ -130,21 +103,23 @@ const resourceQueries = require('../db/resource_queries');
 // Adding a review to a resource Card
   router.post("/:resourceId", (req, res) => {
     const userId = req.session.userId;
+    const resourceId = req.params.resourceId;
     if(!userId) {
     res.send({message: "not logged in "});
     //! update with action for redirecting to log in
     return;
     }
     console.log(`user is logged in as ${userId}, continuing w the next task`);
-    resourceQueries.addReview({...req.body, reviewer_id: userId})
+    resourceQueries.addReview({...req.body, resource_id: resourceId, reviewer_id: userId})
     .then((resource) => {
-
+      //receives the resources_reviews object!
+      // const reviewedResourcesId = resource.id;
+      res.redirect(`/resources/${resourceId}`);
     })
     .catch((err) => {
 
     })
   });
 
-//? how to implement like and rating? same post route?
 
 module.exports = router;
