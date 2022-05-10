@@ -2,18 +2,20 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+
+
 main {
   max-height: auto;
   min-height: 100vh;
 
-  background: rgb(163, 208, 219);
-  background: linear-gradient(227deg,
-      #c8cec4 0%,
-      #9ba8a8 20%,
-      #9ba8b8 34%,
-      #c8cec4 59%,
-      #c8ced4 74%,
-      #c8cec4 100%);
+  background: linear-gradient(to right bottom,
+  #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #83a1e4,
+  #6ca6e4, #57abe0, #31acd5, #00abc5, #00a9b2, #18a69d);
+
+}
+
+#background-img {
+  background-image: url("/background-img/asfalt-light.png");
 }
 
 nav {
@@ -52,20 +54,19 @@ nav {
 
 }
 
-.edutag {
-  padding-bottom: 4px;
-  padding-top: 4px;
-  padding-left: 18px;
-}
+// .edutag {
+//   padding-bottom: 4px;
+//   padding-top: 4px;
+//   padding-left: 18px;
+// }
 
 
 .card {
   margin-top: 40px;
-  background: rgba( 155, 168, 168, 0.25 );
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
-  border-radius: 10px;
+  backdrop-filter: blur( 6.8px );
+  -webkit-backdrop-filter: blur( 6.8px );
+  border-radius: 15px;
   border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
@@ -79,6 +80,8 @@ nav {
     41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
     100px 100px 80px rgba(0, 0, 0, 0.07)
 }
+
+
 
 .card-comments {
   margin-top: 5px;
@@ -127,6 +130,22 @@ nav {
 .fa-star:hover {
   animation: rotation 0.5s linear;
 }
+
+.login-dd {
+  width: 100%;
+  height: 80px;
+
+  margin-left: 200px;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  background: transparent;
+
+  z-index: 20;
+
+}
+
+
 
 
 @keyframes rotation {

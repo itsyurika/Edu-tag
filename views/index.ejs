@@ -42,17 +42,18 @@
 <body>
 
   <%- include('partials/_navbar'); %>
+  <%- include('partials/_login'); %>
 
     <main>
-
+      <div id="background-img">
       <%- include('partials/_sidebar'); %>
         <!-- Main Page Division-->
         <div class="col-9" style="margin-left: 22%;">
 
-          <%- include('createresource'); %>
+          <%- include('resourcecards'); %>
 
         </div>
-
+      </div>
     </main>
 
 

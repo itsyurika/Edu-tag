@@ -1,6 +1,21 @@
 
 // Client facing scripts here
 
+const loginDropDown = function() {
+  if ($('.login-dd').is(':visible')) {
+    $(".login-dd").slideUp();
+    // $("#errormsg").slideUp();
+
+  } else {
+    $(".login-dd").slideDown();
+
+  }
+};
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", function(){
   window.addEventListener('scroll', function() {
       if (window.scrollY > 0) {
@@ -14,4 +29,27 @@ document.addEventListener("DOMContentLoaded", function(){
         document.body.style.paddingTop = '0';
       }
   });
+
+  $(".login-dd").slideUp();
+  $(".login-btn").on("click", function() {
+    loginDropDown();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
