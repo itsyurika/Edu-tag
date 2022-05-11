@@ -10,7 +10,6 @@ const router  = express.Router();
 const userQueries = require('../db/user_queries');
 const bcrypt = require('bcrypt');
 const db = require('../db/db_connect');
-const { user } = require('pg/lib/defaults');
 
 
 //**? put it there for possible future use - user routes gate filter (delete if unused) */
@@ -43,7 +42,7 @@ const { user } = require('pg/lib/defaults');
   });
 
   // /register
-  router.get("/regiter", (req, res) => {
+  router.get("/register", (req, res) => {
   });
 
   // accessing my profile page to update my info
@@ -96,13 +95,15 @@ const { user } = require('pg/lib/defaults');
     userQueries.login(email, password)
     .then((user) => {
       console.log("after successful login fxn, at .then ", user);
+
       if(!user) {
         res.send({error: "authentication error"});
         return;
       }
       req.session.userId = user.id;
+      const templateVars = {user: req.session.userId};
       //*! Please replace the following code with action after successful login
-      res.json(user);
+      res.render("index", templateVars);
     })
     .catch((err) => {
       console.log("login_error : ", err);

@@ -1,16 +1,19 @@
-
 <div class="login-dd bg-dark">
-<div class="row">
-  <div class="col">
-    <input type="email" class="form-control email-password" placeholder="Email" aria-label="Email">
+  <div class="row">
+    <div class="col">
+      <form method="POST" action="/users/login">
+        <input name="email" type="email" class="form-control email-password" placeholder="Email" aria-label="Email">
+    </div>
+    <div class="col">
+      <input name="password" type="password" class="form-control email-password" placeholder="Password"
+        aria-label="Password">
+    </div>
+    <div class="col">
+      <div class="login-to-site">
+        <button type="submit" class="btn btn-secondary  login-user">Login!</button>
+        </form>
+
+      </div>
+    </div>
   </div>
-  <div class="col">
-    <input type="text" class="form-control email-password" placeholder="Password" aria-label="Password">
-  </div>
-  <div class="col">
-  <div class="login-to-site">
-    <button type="submit" class="btn btn-secondary">Login!</button>
-  </div>
-</div>
-</div>
 </div>

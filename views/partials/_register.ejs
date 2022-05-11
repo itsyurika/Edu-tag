@@ -2,18 +2,20 @@
 <div class="register-dd bg-dark">
   <div class="row">
     <div class="col">
-      <input type="text" class="form-control user-email-password" placeholder="Username" aria-label="Username">
+      <form method="POST" action="/users/register">
+      <input name="name" type="text" class="form-control user-email-password" placeholder="Username" aria-label="Username">
     </div>
     <div class="col">
-      <input type="email" class="form-control user-email-password" placeholder="Email" aria-label="Email">
+      <input name="email" type="email" class="form-control user-email-password" placeholder="Email" aria-label="Email">
     </div>
     <div class="col">
-      <input type="text" class="form-control user-email-password" placeholder="Password" aria-label="Password">
+      <input name="password" type="password" class="form-control user-email-password" placeholder="Password" aria-label="Password">
     </div>
     <div class="col">
     <div class="register-to-site">
       <button type="submit" class="btn btn-secondary">Register!</button>
     </div>
+  </form>
   </div>
   </div>
   </div>

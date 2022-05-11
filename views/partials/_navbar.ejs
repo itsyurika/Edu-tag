@@ -1,4 +1,7 @@
   <!-- Navbar -->
+
+<% if (!user) { %>
+
   <nav id="navbar_top" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -25,7 +28,7 @@
               <li><a class="dropdown-item" href="#">Date Added</a></li>
               <li><a class="dropdown-item" href="#">Tags</a></li>
               <li><a class="dropdown-item" href="#">Title</a></li>
-              <li><a class="dropdown-item" href="#">My Rating</a></li>
+
             </ul>
           </li>
         </ul>
@@ -39,3 +42,46 @@
       </div>
     </div>
   </nav>
+
+  <% } else { %>
+
+    <nav id="navbar_top" class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <!-- User Logged in Specific Code -->
+              <a class="nav-link active nav-user" aria-current="page" href="#">Hello, ${user.name}!</a>
+            </li>
+            <!--End of User Logged in Specific Code -->
+            <li class="nav-item dropdown">
+              <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Order By
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdown">
+                <li><a class="dropdown-item popular" href="#">Popularity</a></li>
+                <li><a class="dropdown-item date_added" href="#">Date Added</a></li>
+                <li><a class="dropdown-item dd_tags" href="#">Tags</a></li>
+                <li><a class="dropdown-item dd_title" href="#">Title</a></li>
+                <li><a class="dropdown-item my_rating" href="#">My Rating</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <form class="d-flex">
+            <input class="form-control mr-sm-2 search-form" type="search" placeholder="Search Tags" aria-label="Search">
+            <button class="btn btn-dark my-2 my-sm-0" id="search-button" type="submit"><i
+                class="fas fa-search"></i></button>
+          </form>
+
+        </div>
+      </div>
+    </nav>
+
+
+    <% } %>
