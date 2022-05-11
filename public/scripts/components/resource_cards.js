@@ -33,5 +33,6 @@
     }
   }
 
+  window.resourceCards.clearCards = clearCards;
   window.resourceCards.addResources = addResources;
 })(jQuery);
