@@ -24,8 +24,8 @@
 }
 
 .spl-url-preview {
-  max-width: 640px;
-  min-width: 640px;
+  max-width: 90%;
+  min-width: 90%;
 }
 
 
@@ -67,10 +67,13 @@
 .spl-comment-body {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
 }
 
 .spl-comments {
+  min-width: 90%;
+  max-width: 90%;
   margin: 20px;
   padding: 12px;
   border: 3px solid black;
@@ -86,6 +89,10 @@ background-color: transparent;
 
 }
 
+.spl-text {
+  max-width: 600px;
+}
+
 .spl-commenter {
   display: flex;
   justify-content: space-between;
@@ -95,7 +102,6 @@ background-color: transparent;
 }
 
 .comment-content {
-
   padding-top: 5px;
   padding-bottom: 5px;
 }
