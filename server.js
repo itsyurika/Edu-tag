@@ -25,7 +25,6 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, '/public')));
 
 // import the db
-const db = require('./db/db_connect');
 
 // sass set up
 app.use(
@@ -49,11 +48,13 @@ app.use(cookieSession({
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const resourceRoutes = require("./routes/resources");
+const indexRoute = require("./routes/index")
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/users", usersRoutes);
 app.use("/resources", resourceRoutes);
+app.use("/", indexRoute);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -62,7 +63,7 @@ app.use("/resources", resourceRoutes);
 
 
 app.get("/", (req, res) => {
-  res.render("index");
+res.error(404).send("better luck next time!")
 });
 
 app.listen(PORT, () => {

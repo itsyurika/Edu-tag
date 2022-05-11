@@ -1,4 +1,3 @@
-const res = require('express/lib/response');
 const db = require('./db_connect');
 
 /**

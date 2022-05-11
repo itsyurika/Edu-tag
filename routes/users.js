@@ -13,37 +13,29 @@ const db = require('../db/db_connect');
 
 
 //**? put it there for possible future use - user routes gate filter (delete if unused) */
-  router.use((req, res, next) => {
-    if(true) {
-      console.log("passing through filter gate");
-      next();
-    }
-    // res.send("Unauthorized Access");
-  });
+  // router.use((req, res, next) => {
+  //   if(true) {
+  //     console.log("passing through filter gate");
+  //     next();
+  //   }
+  //   // res.send("Unauthorized Access");
+  // });
 
   // get all users
-  router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
+  // router.get("/", (req, res) => {
+  //   db.query(`SELECT * FROM users;`)
+  //     .then(data => {
+  //       const users = data.rows;
+  //       res.json({ users });
+  //     })
+  //     .catch(err => {
+  //       res
+  //         .status(500)
+  //         .json({ error: err.message });
+  //     });
+  // });
 
 //Get Routes - if we're doing html-ejs way - placeholder fxn and therefore not actually working
-
-  // /login
-  router.get("/login", (req, res) => {
-  });
-
-  // /register
-  router.get("/register", (req, res) => {
-  });
 
   // accessing my profile page to update my info
   router.get("/myprofile", (req, res) => {
@@ -67,26 +59,19 @@ const db = require('../db/db_connect');
     })
   });
 
-  // other user's wall
-  router.get("/:otherUserName", (req, res) => {
-    const otherUserName = req.params.otherUserName;
-    const userId = req.session.userId;
-    let myName;
-    userQueries.getUserById(userId)
-    .then(user => {
-      myName = user.name;
-    })
-    //If the logged in user visits their own username page redirect to my wall page?
-    if(otherUserName === myName) {
-      res.redirect("/myprofile"); //**? UPDATE this with my wall page */
-    }
-    userQueries.getUserByName(otherUserName)
-    .then(user => {
-      //? Implement Other user's wall page //
-    })
-  })
-
   //POST routes
+  router.get("/login/:id", (req,res) => {
+    req.session.userId = req.params.id;
+    res.redirect("/")
+  });
+
+  //Logout
+  router.get("/logout", (req, res) => {
+    console.log("logout");
+    // req.session.userId = null;
+    //*! Please replace the following code w action after successful logout - redirection to non-logged in resource wall?
+    res.send("you've logged out");
+  });
 
   //Logging in with an existing account
   router.post("/login", (req, res) => {
@@ -101,7 +86,7 @@ const db = require('../db/db_connect');
         return;
       }
       req.session.userId = user.id;
-      const templateVars = {user: req.session.userId};
+      const templateVars = {...user, sessionId: req.session.userId};
       //*! Please replace the following code with action after successful login
       res.render("index", templateVars);
     })
@@ -111,6 +96,8 @@ const db = require('../db/db_connect');
     })
   });
 
+
+
   //Create a new user
   router.post("/register", (req, res) => {
     const user = req.body;
@@ -119,7 +106,9 @@ const db = require('../db/db_connect');
     .then((user) => {
       req.session.userId = user.id;
       //*! Please replace the following code with action after successful registration
-      res.json(user);
+      const templateVars = {user: req.session.userId};
+      // res.json(user);
+      res.render("index", templateVars);
     })
     .catch((err) => {
       console.log("error : ", err);
@@ -142,11 +131,24 @@ const db = require('../db/db_connect');
   })
   });
 
-  //Logout
-  router.post("/logout", (req, res) => {
-    req.session.userId = null;
-    //*! Please replace the following code w action after successful logout - redirection to non-logged in resource wall?
-    res.send({});
-  });
+    // other user's wall
+    router.get("/:otherUserName", (req, res) => {
+      const otherUserName = req.params.otherUserName;
+      const userId = req.session.userId;
+      let myName;
+      userQueries.getUserById(userId)
+      .then(user => {
+        myName = user.name;
+      })
+      //If the logged in user visits their own username page redirect to my wall page?
+      if(otherUserName === myName) {
+        res.redirect("/myprofile"); //**? UPDATE this with my wall page */
+      }
+      userQueries.getUserByName(otherUserName)
+      .then(user => {
+        //? Implement Other user's wall page //
+      })
+    })
+
 
 module.exports = router;
