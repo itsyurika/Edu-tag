@@ -26,8 +26,8 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
+// app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, '/public')));
-// app.use(express.static("public")); //** delete if working */
 
 // import the db
 const db = require('./db/db_connect');
@@ -67,12 +67,11 @@ app.use("/resources", resourceRoutes);
 const randomUser = require('./db/faker');
 
 app.get("/", (req, res) => {
-  // res.render("index");
-  const output = [];
-  for (let i = 0; i < 10; i++) {
-    output.push(randomUser());
-  }
-  res.send(output);
+  // const output = [];
+  // for (let i = 0; i < 10; i++) {
+  //   output.push(randomUser());
+  // }
+  res.render("index");
 });
 
 app.listen(PORT, () => {
