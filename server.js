@@ -10,12 +10,6 @@ const morgan = require("morgan");
 const cookieSession = require('cookie-session');
 const path = require('path');
 
-// // PG database client/connection setup
-// const { Pool } = require("pg");
-// const dbParams = require("./lib/db.js");
-// const db = new Pool(dbParams);
-// db.connect(); //** delete if working */
-
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -24,7 +18,7 @@ app.use(morgan("dev"));
 
 //connection set up
 app.use(express.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
+app.set("view engine", "html");
 
 // app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, '/public')));
@@ -64,14 +58,19 @@ app.use("/resources", resourceRoutes);
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-const randomUser = require('./db/faker');
+
+//*delete
+// const randomUser = require('./db/faker');
 
 app.get("/", (req, res) => {
   // const output = [];
   // for (let i = 0; i < 10; i++) {
   //   output.push(randomUser());
   // }
-  res.render("index");
+  // res.render("index");
+  console.log("first")
+  res.send("abc");
+
 });
 
 app.listen(PORT, () => {

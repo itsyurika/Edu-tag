@@ -48,8 +48,21 @@ const resourceQueries = require('../db/resource_queries');
     })
   })
 
-//  Tag Search
+// Default Resources
   router.get("/", (req, res) => {
+    console.log("executing get / routes");
+    resourceQueries.getAllResources(15)
+    .then((resources) => {
+      res.send({resources});
+    })
+    .catch((e) => {
+      console.log("error while passing through the resources route with .get: ", err);
+    })
+  })
+
+
+//  Tag Search
+  router.get("/search", (req, res) => {
     // whether a user is logged in or not, /resources page will show the popular / highest rating resources
     const {searchTag} = req.body; //? or use req.query?
     resourceQueries.getResourceByTag(searchTag, 15)

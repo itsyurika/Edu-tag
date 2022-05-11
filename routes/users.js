@@ -10,7 +10,6 @@ const router  = express.Router();
 const userQueries = require('../db/user_queries');
 const bcrypt = require('bcrypt');
 const db = require('../db/db_connect');
-const { user } = require('pg/lib/defaults');
 
 
 //**? put it there for possible future use - user routes gate filter (delete if unused) */
@@ -43,7 +42,7 @@ const { user } = require('pg/lib/defaults');
   });
 
   // /register
-  router.get("/regiter", (req, res) => {
+  router.get("/register", (req, res) => {
   });
 
   // accessing my profile page to update my info

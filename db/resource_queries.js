@@ -1,5 +1,25 @@
-const res = require('express/lib/response');
 const db = require('./db_connect');
+
+
+/**
+ *
+ * @param {INT} limit
+ * @returns a promise with array of resource card objects
+ */
+const getAllResources = (limit = 15) =>{
+  const queryString = `SELECT resources.* FROM resources JOIN resources_reviews ON resources_reviews.resource_id = resources.id GROUP BY resources.id ORDER BY AVG(resources_reviews.rating) LIMIT $1;`
+  const queryValue = [limit];
+
+  return db
+  .query(queryString, queryValue)
+  .then((resources) => {
+    console.log("after getAllResources fxn :" , resources);
+    return resources.rows;
+  })
+  .catch((err) => {
+    console.log("error while getting all resources : ", err);
+  })
+}
 
 /**
  * Fetches all resources that is created by the current user
@@ -7,6 +27,7 @@ const db = require('./db_connect');
  * @param {INTEGER} limit
  * @returns a promise with an array of resource objects that matches creator_id = userID
  */
+
 const getMyResources = (creator_id, limit = 15) => {
   const queryString = `SELECT * FROM resources WHERE creator_id = $1 ORDER BY create_date DESC LIMIT $2;`;
   const queryValue = [creator_id, limit];
@@ -140,6 +161,7 @@ const getReviews = (resourceId) => {
 
 module.exports = {
   //list all the functions here
+  getAllResources,
   getMyResources,
   getLikedResources,
   getResourceByTag,
