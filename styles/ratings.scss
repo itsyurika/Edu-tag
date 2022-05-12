@@ -1,0 +1,64 @@
+label .star-label {
+  color: Gold;
+  text-indent: -2000em;
+  display: inline-block;
+  font-size: 1.2em;
+  width: 1.2em;
+}
+label .star-label:before {
+  content: "★";
+  position: relative;
+  left: 2000em;
+}
+input:checked ~ label .star-label{
+  color: Black;
+}
+input {
+  display: none;
+}
+form.rating:hover label {
+  color: Gold;
+}
+form.rating label:hover ~ label {
+  color: Black;
+}
+
+//heart functionality
+
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.heart_checked {
+  opacity: 0;
+  z-index: 999;
+}
+
+.heart_checked {
+  font-weight: bold;
+  background: red;
+  background-clip: text;
+}
+
+label #heart-label {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 25px;
+}
+
+.fa-heart,
+input {
+  cursor: pointer;
+  position: absolute;
+  right: 24px;
+}
+
+label>input[type="checkbox"]:checked~.heart_checked {
+  display: block;
+  opacity: 1;
+}

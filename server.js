@@ -27,14 +27,14 @@ app.use(express.static(path.join(__dirname, '/public')));
 // import the db
 
 // sass set up
-app.use(
-  "/styles",
-  sassMiddleware({
-    source: __dirname + "/styles",
-    destination: __dirname + "/public/styles",
-    isSass: false, // false => scss, true => sass
-  })
-);
+// app.use(
+//   "/styles",
+//   sassMiddleware({
+//     source: __dirname + "/styles",
+//     destination: __dirname + "/public/styles",
+//     isSass: false, // false => scss, true => sass
+//   })
+// );
 
 //cookie session set up
 app.use(express.json());
@@ -69,3 +69,5 @@ res.error(404).send("better luck next time!")
 app.listen(PORT, () => {
   console.log(`Resource wall listening on port ${PORT} 😎`);
 });
+
+console.log("test")
