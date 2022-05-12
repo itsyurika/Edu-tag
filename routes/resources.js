@@ -178,29 +178,13 @@ router.get("/:resourceId", (req, res) => {
     console.log("rendering review: ", review);
     user.resources.review = review;
     console.log("rendring user object : ", user);
-    res.render('singleresourcepage', {user})})
+    res.render('singleresourcepage', {user})
+  })
   .catch((err) => {
     console.log("error loading individual resource page: ", err);
     res.send(err);
   })
-  // let user;
-  // userQueries.getUserById(userId)
-  // .then((userData) => {
-  //   user = userData;
-  //   return resourceQueries.getResourceById(resourceId);
-  // })
-  // .then((resources) => {
-  //   user.resources = resources;
-  //   return resourceQueries.getMyTags(userId);
-  // })
-  // .then((tags) => {
-  //   user.tags = tags;
-  //   res.render("singleresourcepage", {user});
-  // })
-  // .catch((err) => {
-  //   console.log("error loading an individual resource data: ", err);
-  //   res.send(err);
-  });
+  })
 
 
 
