@@ -6,7 +6,6 @@
  */
 
 const express = require('express');
-const { user } = require('pg/lib/defaults');
 const router  = express.Router();
 const resourceQueries = require('../db/resource_queries');
 const userQueries = require('../db/user_queries');
@@ -43,14 +42,17 @@ const userQueries = require('../db/user_queries');
   router.get("/mylikes", (req, res) => {
     const userId = req.session.userId;
     if(!userId) {
-      res.send({message: "not logged in "});
-      //! update with action for redirecting to log in
+      res.redirect('/');
       return;
       }
     resourceQueries.getLikedResources(userId, 15)
     .then((resources) => {
-      //! implement multiple resources wall page w the returned data
-      res.send({resources})
+      resourceQueries.getMyTags(userId)
+      .then((tags) => {
+        const user = {id: userId, tags: tags};
+        user.resources = resources;
+        res.render("mylikes",{user});
+      })
     })
     .catch((err) => {
       console.log("error during loding my liked resources ", err);
@@ -99,6 +101,7 @@ const userQueries = require('../db/user_queries');
     const tag = req.params.tag
     resourceQueries.getResourceByTag(tag)
     .then((resources) => {
+      console.log("all the resouces searched by tag: ", resources);
       userQueries.getUserById(userId)
       .then((user) => {
         user.resources = resources;
@@ -147,7 +150,11 @@ router.get("/:resourceId", (req, res) => {
     userQueries.getUserById(userId)
     .then((user) => {
       user.resources = resources;
-      res.render("singleresourcepage", {user});
+      resourceQueries.getMyTags(userId)
+      .then((tags) => {
+        user.tags = tags;
+        res.render("singleresourcepage", {user});
+      })
     })
   })
   .catch((err) => {

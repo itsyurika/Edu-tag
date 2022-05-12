@@ -7,8 +7,8 @@
 
 const express = require('express');
 const router  = express.Router();
-const userQueries = require('../db/user_queries');
 const bcrypt = require('bcrypt');
+const userQueries = require('../db/user_queries');
 const resourceQueries = require('../db/resource_queries');
 
 //Get Routes - if we're doing html-ejs way - placeholder fxn and therefore not actually working
@@ -38,11 +38,11 @@ const resourceQueries = require('../db/resource_queries');
     })
   });
 
-  //POST routes
-  router.get("/login/:id", (req,res) => {
-    req.session.userId = req.params.id;
-    res.redirect("/")
-  });
+  // //POST routes
+  // router.get("/login/:id", (req,res) => {
+  //   req.session.userId = req.params.id;
+  //   res.redirect("/")
+  // });
 
   //Logout
   router.post("/logout", (req, res) => {

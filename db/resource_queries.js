@@ -32,6 +32,7 @@ const getLikedResources = (userId, limit = 15) => {
   return db
   .query(queryString, queryValue)
   .then((resources) => {
+    console.log("returning liked resources: ", resources.rows);
     return resources.rows;
   })
   .catch((err) => {
@@ -46,7 +47,7 @@ const getLikedResources = (userId, limit = 15) => {
  * @returns a promise with an array of resource objects that matches tags.name = query tag
  */
 const getResourceByTag = (tag, limit = 15) => {
-  const queryString = `SELECT resources.* FROM resources JOIN resources_tags ON resources_tags.resource_id = resources.id JOIN tags ON resources_tags.tag_id = tags.id WHERE tags.name = $1 LIMIT $2`;
+  const queryString = `SELECT resources.* FROM resources WHERE resources.tag = $1 ORDER BY resources.create_date DESC LIMIT $2`;
   const queryValue = [tag, limit];
 
   return db
@@ -144,6 +145,7 @@ const getMyTags = (userId) => {
   return db
   .query(queryString, queryValue)
   .then((tags) => {
+    console.log("these are the tags that are being loaded: ", tags.rows);
     return tags.rows;
   })
   .catch((err) => {

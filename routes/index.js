@@ -13,6 +13,11 @@ const resourceQueries = require('../db/resource_queries');
 
 router.get("/", (req, res) => {
   const id = req.session.userId
+  if(!id) {
+    const user = {};
+    user.tags = [];
+    res.render("index", {user});
+  }
   userQueries.getUserById(id)
   .then((user) => {
     resourceQueries.getMyTags(id)

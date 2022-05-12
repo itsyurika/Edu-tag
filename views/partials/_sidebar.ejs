@@ -1,4 +1,4 @@
-<% if (!user) { %>
+<% if (!user.id) { %>
 
   <div class="row sidebar-head">
     <div class="col-3">
@@ -41,7 +41,6 @@
                 <ul class="list-unstyled">
                   <ul>
                     <%  for (tags of user.tags) {      %>
-                    <% console.log(user.tags) %>
                    <li><a class="my-tags-sidebar" href="/resources/tags/<%= tags.tag %>"</a><%= tags.tag %></li>
                     <% } %>
 
@@ -51,7 +50,7 @@
 
             </li>
             <li>
-              <a href="#" class="nav-link text-white my-likes">
+              <a href="/resources/mylikes" class="nav-link text-white my-likes">
                 My Likes
               </a>
             </li>
