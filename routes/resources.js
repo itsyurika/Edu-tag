@@ -144,18 +144,19 @@ const userQueries = require('../db/user_queries');
 router.get("/:resourceId", (req, res) => {
   const userId = req.session.userId;
   const resourceId = req.params.resourceId;
-  resourceQueries.getResourceById(resourceId)
+  let user;
+  userQueries.getUserById(userId)
+  .then((userData) => {
+    user = userData;
+    return resourceQueries.getResourceById(resourceId);
+  })
   .then((resources) => {
-    //! render single resource page w the returned resource data
-    userQueries.getUserById(userId)
-    .then((user) => {
-      user.resources = resources;
-      resourceQueries.getMyTags(userId)
-      .then((tags) => {
-        user.tags = tags;
-        res.render("singleresourcepage", {user});
-      })
-    })
+    user.resources = resources;
+    return resourceQueries.getMyTags(userId);
+  })
+  .then((tags) => {
+    user.tags = tags;
+    res.render("singleresourcepage", {user});
   })
   .catch((err) => {
     console.log("error loading an individual resource data: ", err);

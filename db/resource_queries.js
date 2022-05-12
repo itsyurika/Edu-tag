@@ -131,13 +131,17 @@ const getReviews = (resourceId) => {
   .query(queryString, queryValue)
   .then((reviews) => {
     return reviews.rows; //returns array of objects which has resource_id, reviewer_id, rating, message, and liked boolean!
-
   })
   .catch((err) => {
     console.log("error while getting reviews of a specific resource: ", err);
   })
 }
 
+/**
+ *
+ * @param {INTEGER} userId
+ * @returns a promise of array of object in the format [{tag: "tagName"}, {tag: "tagName2"}]
+ */
 const getMyTags = (userId) => {
   const queryString = `SELECT DISTINCT(resources.tag) FROM resources WHERE resources.creator_id = $1`;
   const queryValue = [userId];
