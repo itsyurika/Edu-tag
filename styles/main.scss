@@ -34,7 +34,7 @@ nav {
 }
 
 .search-form {
-  margin-right: 5px;
+  margin-right: 20px;
 }
 
 #search-button {
@@ -138,7 +138,6 @@ nav {
   display: flex;
   justify-content: space-between;
   position: fixed;
-  display: none;
   z-index: 20;
 
 }
@@ -157,8 +156,9 @@ nav {
 
 .email-password {
   min-width: 400px;
-
 }
+
+
 
 .user-email-password {
   min-width: 300px;
