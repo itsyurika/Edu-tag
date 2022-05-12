@@ -142,7 +142,7 @@ const addReview = (reviewData) => {
  * @returns a promise with an ARRAY of review objects for that specific resource with resource id.
  */
 const getReviews = (resourceId) => {
-  const queryString = `SELECT resources_reviews.* AS reviewer_name FROM resources_reviews WHERE resource_id = $1`;
+  const queryString = `SELECT resources_reviews.*, users.name AS reviewer_name FROM resources_reviews JOIN users ON users.id = resources_reviews.reviewer_id WHERE resource_id = $1;`;
   const queryValue = [resourceId];
   return db
   .query(queryString, queryValue)

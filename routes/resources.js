@@ -178,7 +178,7 @@ router.get("/:resourceId", (req, res) => {
     console.log("rendering review: ", review);
     user.resources.review = review;
     console.log("rendring user object : ", user);
-    res.render('singleresourcepage', {user})
+    res.render('singleresourcepage', {user})})
   .catch((err) => {
     console.log("error loading individual resource page: ", err);
     res.send(err);
@@ -200,8 +200,8 @@ router.get("/:resourceId", (req, res) => {
   // .catch((err) => {
   //   console.log("error loading an individual resource data: ", err);
   //   res.send(err);
-  })
-});
+  });
+
 
 
 

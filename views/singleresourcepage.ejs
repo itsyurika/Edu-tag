@@ -128,13 +128,12 @@
           <span class="name-and-pic">
             <!-- <img src="https://i.imgur.com/nlhLi3I.png"> -->
 
-            <p class="spl-comment-name">carly</p>
+            <p class="spl-comment-name"><%=review.reviewer_name%></p>
           </span>
         </header>
         <hr>
         <p class="comment-content">
-          A great interactive tool! I can see use for this in the classroom. Great presentation and native dark
-          mode makes it so easy on the eyes!
+          <%=review.message%>
         </p>
       </section>
       <%} %>
