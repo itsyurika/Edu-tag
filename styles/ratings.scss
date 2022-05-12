@@ -6,60 +6,6 @@
   animation: rotation 0.5s linear;
 }
 
-
-// .fa-heart:hover {
-//   transform-origin: 50% 50%;
-//   animation: pulse 2000ms;
-// }
-
-
-//heart functionality
-
-// input[type="checkbox"] {
-//   position: absolute;
-//   opacity: 0;
-//   cursor: pointer;
-//   height: 0;
-//   width: 0;
-// }
-
-// .heart_checked {
-//   opacity: 0;
-//   z-index: 999;
-// }
-
-// .heart_checked {
-//   font-weight: bold;
-//   background: red;
-//   background-clip: text;
-// }
-
-// label #heart-label {
-//   position: absolute;
-//   top: 24px;
-//   right: 24px;
-//   font-size: 25px;
-// }
-
-// .fa-heart,
-// input {
-//   cursor: pointer;
-//   position: absolute;
-//   right: 24px;
-// }
-
-// label>input[type="checkbox"]:checked~.heart_checked {
-//   display: block;
-//   opacity: 1;
-// }
-
-// body {
-//   display: flex;
-//   justify-content: center;
-//   margin: 0;
-//   height: 100vh;
-// }
-
 .heart-icon {
   display: flex;
   justify-content: space-between;
