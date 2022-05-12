@@ -33,7 +33,7 @@
           </li>
         </ul>
 
-        <form class="d-flex">
+        <form class="d-flex" method="GET" action="/search">
           <input class="form-control mr-sm-2 search-form" type="search" placeholder="Search Tags" aria-label="Search">
           <button class="btn btn-dark my-2 my-sm-0" id="search-button" type="submit"><i
               class="fas fa-search"></i></button>
@@ -73,8 +73,8 @@
             </li>
           </ul>
 
-          <form class="d-flex">
-            <input class="form-control mr-sm-2 search-form" type="search" placeholder="Search Tags" aria-label="Search">
+          <form class="d-flex" method="GET" action="/search">
+            <input class="form-control mr-sm-2 search-form" type="search" placeholder="Search Tags" aria-label="Search" name="q">
             <button class="btn btn-dark my-2 my-sm-0" id="search-button" type="submit"><i
                 class="fas fa-search"></i></button>
           </form>

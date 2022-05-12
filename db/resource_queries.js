@@ -149,7 +149,7 @@ const getMyTags = (userId) => {
   return db
   .query(queryString, queryValue)
   .then((tags) => {
-    console.log("these are the tags that are being loaded: ", tags.rows);
+    console.log("these are the tags that are being loaded from getMyTags fxn: ", tags.rows);
     return tags.rows;
   })
   .catch((err) => {

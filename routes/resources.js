@@ -62,7 +62,8 @@ const userQueries = require('../db/user_queries');
 
 //  Tag Search
   router.get("/search", (req, res) => {
-    const tag = req.query.tag;
+    const tag = req.query.q;
+    console.log("tag : ", tag);
     const userId = req.session.userId;
     let user = {};
     if(userId) {
