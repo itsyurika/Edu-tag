@@ -13,7 +13,7 @@
 }
 
 .userpage-form {
-  min-width: 400px;
+  max-width: 300px;
   background-color: transparent;
   -webkit-transition: all 0.30s ease-in-out;
   -moz-transition: all 0.30s ease-in-out;
@@ -48,20 +48,22 @@
   font-weight: 600;
 }
 
-.update-email {
-  margin-left: 20px;
-}
+// .update-email {
+//   margin-left: 0px;
+// }
 
 .rainbow {
 	-webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
-#flex-email-update {
-  display: flex;
-  justify-content: space-between;
 
-}
+
+// #flex-email-update {
+//   display: flex;
+//   justify-content: space-between;x
+
+// }
 
 
 

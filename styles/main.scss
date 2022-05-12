@@ -176,6 +176,11 @@ nav {
   align-items: center;
 }
 
+.my-tags-sidebar {
+  text-decoration: none;
+  color: white;
+}
+
 @keyframes rotation {
   50% {
     transform: rotate(180deg);
