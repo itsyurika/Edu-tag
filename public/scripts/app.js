@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function(){
          // remove padding top from body
         document.body.style.paddingTop = '0';
       }
-  });
+
 
 
   $(".login-btn").on("click", function() {
@@ -55,7 +55,11 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 
 
+  //  $('.rate-button').submit(function(e) {
+  //    e.preventDefault();
+  //  })
 
+});
 
 
 
