@@ -6,5 +6,6 @@ CREATE TABLE resources (
   url TEXT NOT NULL,
   description TEXT,
   create_date DATE NOT NULL DEFAULT NOW(),
-  thumbnail_url TEXT
+  thumbnail_url TEXT,
+  tag VARCHAR(255)
 );

@@ -9,31 +9,7 @@ const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/user_queries');
 const bcrypt = require('bcrypt');
-const db = require('../db/db_connect');
-
-
-//**? put it there for possible future use - user routes gate filter (delete if unused) */
-  // router.use((req, res, next) => {
-  //   if(true) {
-  //     console.log("passing through filter gate");
-  //     next();
-  //   }
-  //   // res.send("Unauthorized Access");
-  // });
-
-  // get all users
-  // router.get("/", (req, res) => {
-  //   db.query(`SELECT * FROM users;`)
-  //     .then(data => {
-  //       const users = data.rows;
-  //       res.json({ users });
-  //     })
-  //     .catch(err => {
-  //       res
-  //         .status(500)
-  //         .json({ error: err.message });
-  //     });
-  // });
+const resourceQueries = require('../db/resource_queries');
 
 //Get Routes - if we're doing html-ejs way - placeholder fxn and therefore not actually working
 
@@ -50,8 +26,11 @@ const db = require('../db/db_connect');
         res.send({error: "no user with that id"});
         return;
       }
-      //! Please replace the following code to reflect logged in user's profile page
-      res.json(user)
+      resourceQueries.getMyTags(userId)
+      .then((tags) => {
+        user.tags = tags;
+        res.render("userprofile", {user});
+      })
     })
     .catch((err) => {
       console.log("error displaying profile page: ", err);
@@ -66,11 +45,11 @@ const db = require('../db/db_connect');
   });
 
   //Logout
-  router.get("/logout", (req, res) => {
+  router.post("/logout", (req, res) => {
     console.log("logout");
-    // req.session.userId = null;
-    //*! Please replace the following code w action after successful logout - redirection to non-logged in resource wall?
-    res.send("you've logged out");
+    req.session.userId = null;
+    // res.send("you've logged out");
+    res.redirect("/");
   });
 
   //Logging in with an existing account
@@ -80,15 +59,12 @@ const db = require('../db/db_connect');
     userQueries.login(email, password)
     .then((user) => {
       console.log("after successful login fxn, at .then ", user);
-
       if(!user) {
         res.send({error: "authentication error"});
         return;
       }
       req.session.userId = user.id;
-      const templateVars = {...user, sessionId: req.session.userId};
-      //*! Please replace the following code with action after successful login
-      res.render("index", templateVars);
+      res.redirect("/");
     })
     .catch((err) => {
       console.log("login_error : ", err);
@@ -106,9 +82,9 @@ const db = require('../db/db_connect');
     .then((user) => {
       req.session.userId = user.id;
       //*! Please replace the following code with action after successful registration
-      const templateVars = {user: req.session.userId};
+      // const templateVars = {user: req.session.userId};
       // res.json(user);
-      res.render("index", templateVars);
+      res.redirect("/");
     })
     .catch((err) => {
       console.log("error : ", err);
@@ -119,15 +95,19 @@ const db = require('../db/db_connect');
   //Edit profile
   router.post("/myprofile", (req, res) => {
   const userId = req.session.userId;
-  const newEmail = req.body.newEmail;
+  const newEmail = req.body.emailUpdate;
   if(!userId) {
     res.send({message: "not logged in"});
     return;
   }
-  console.log("from the post route - userid and name: ", userId, newName);
+  console.log("from the post route - userid and name: ", userId, newEmail);
   userQueries.editProfile(userId, newEmail)
   .then((user) => {
-    res.json(user);
+    resourceQueries.getMyTags(userId)
+    .then((tags) => {
+      user.tags = tags;
+      res.render("userprofile", {user});
+    })
   })
   });
 

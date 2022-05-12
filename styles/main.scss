@@ -2,8 +2,6 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-
-
 main {
   max-height: auto;
   min-height: 100vh;
@@ -81,8 +79,6 @@ nav {
     41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
     100px 100px 80px rgba(0, 0, 0, 0.07)
 }
-
-
 
 .card-comments {
   margin-top: 5px;
@@ -173,6 +169,11 @@ nav {
 .rainbow {
 	-webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+.logout {
+  min-width: 90%;
+  align-items: center;
 }
 
 @keyframes rotation {

@@ -1,24 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>EduTag!</title>
+  <!-- External CSS -->
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <!--CSS Stylesheets -->
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/spl.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/create.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/userpage.css" type="text/css" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto+Serif:opsz,wght@8..144,100;8..144,300;8..144,600&display=swap"
+    rel="stylesheet">
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
+  <!-- Bootstrap CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+  <!-- Font Awesome Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Clientside JS -->
+  <script type="text/javascript" src="/scripts/app.js"></script>
+
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+</head>
+
+
+<body>
+
+  <%- include('partials/_navbar'); %>
+  <%- include('partials/_login'); %>
+  <%- include('partials/_register'); %>
+
+    <main>
+      <div id="background-img">
+      <%- include('partials/_sidebar'); %>
+        <!-- Main Page Division-->
+        <div class="col-9" style="margin-left: 22%;">
+
 <!-- Single Resource Page Card -->
 
   <div class="spl-card" style="width: 80%; min-width: 900px;">
     <!-- Leftside of Card -->
     <div class="spl-body" style="width: 90;">
       <div class="spl-info">
-        <h1 class="spl-title rainbow">Periodic Table</h1>
-        <p class="spl-text rainbow">The periodic table, also known as the periodic table of the (chemical) elements, is a
-          tabular display of the chemical elements. It is widely used in chemistry, physics, and other sciences,
-          and is generally seen as an icon of chemistry. It is a graphic formulation of the periodic law, which
-          states that the properties of the chemical elements exhibit a periodic dependence on their atomic
-          numbers.</p>
+        <h1 class="spl-title rainbow"><%- user.resources.title %></h1>
+        <p class="spl-text rainbow"><%- user.resources.description %></p>
         <h3 class="rainbow">
           <bold>Tags: </bold>
         </h3>
-        <p class="spl-tags rainbow">Chemistry, Physics</p>
+        <p class="spl-tags rainbow"><%- user.resources.tag %></p>
         <h3 class="rainbow">
           <bold>Link to Resource: </bold>
           <h3>
-            <a href="http://ptable.com" class="btn btn-secondary btn spl-link rainbow">PTable</a><span class="rainbow"
-              id="spl-link-addy">http://ptable.com</span>
+            <a href="<%- user.resources.url %>" class="btn btn-secondary btn spl-link rainbow">Link</a><span class="rainbow"
+              id="spl-link-addy"><%- user.resources.url %></span>
             <div class="icons">
               <span>
                 <i class="fa fa-heart red ml-3 hover-animation rainbow" data-hover-color="red"></i>
@@ -50,7 +102,7 @@
     <div class="spl-comment-body">
       <!-- <img src="https://www.visionlearning.com/images/figure-images/52-a.jpg" class="card-img-top spl-url-preview rainbow"
         alt="..."> -->
-      <img src="//image.thum.io/get/https://www.ptable.com/" class="card-img-top spl-url-preview rainbow"
+      <img src="https://image.thum.io/get/auth/58035-115fdddb495b048304a3db114625280a/<%- user.resources.url %>" class="card-img-top spl-url-preview rainbow"
       alt="...">
       <!-- 'Old' Comments -->
       <!-- Single Comment -->
@@ -86,3 +138,12 @@
     </div>
 
   </div>
+
+</div>
+</div>
+</main>
+
+
+</body>
+
+</html>

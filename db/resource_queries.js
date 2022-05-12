@@ -85,7 +85,7 @@ const getResourceById = (resourceId) => {
  */
 const addResource = (resourceData) => {
   //? Check with front end to make sure data input order from req.body is matching
-  const queryString = `INSERT INTO resources (title, description, url, creator_id) VALUES ($1, $2, $3, $4) RETURNING *;`;
+  const queryString = `INSERT INTO resources (title, description, tag, url, creator_id) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
   const queryValue = Object.values(resourceData);
 
   return db
@@ -137,6 +137,20 @@ const getReviews = (resourceId) => {
   })
 }
 
+const getMyTags = (userId) => {
+  const queryString = `SELECT DISTINCT(resources.tag) FROM resources WHERE resources.creator_id = $1`;
+  const queryValue = [userId];
+
+  return db
+  .query(queryString, queryValue)
+  .then((tags) => {
+    return tags.rows;
+  })
+  .catch((err) => {
+    console.log("error while fetching all the tags I created");
+  })
+}
+
 module.exports = {
   //list all the functions here
   getMyResources,
@@ -145,5 +159,6 @@ module.exports = {
   getResourceById,
   addResource,
   addReview,
-  getReviews
+  getReviews,
+  getMyTags
 }

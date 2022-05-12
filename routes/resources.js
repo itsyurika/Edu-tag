@@ -6,8 +6,10 @@
  */
 
 const express = require('express');
+const { user } = require('pg/lib/defaults');
 const router  = express.Router();
 const resourceQueries = require('../db/resource_queries');
+const userQueries = require('../db/user_queries');
 
 // My Resources Wall Route
   router.get("/mywall", (req, res) => {
@@ -21,7 +23,15 @@ const resourceQueries = require('../db/resource_queries');
     resourceQueries.getMyResources(userId, 15)
     .then((resources) => {
       //! implement multiple resources wall page w the given data
-      res.send({resources})
+      userQueries.getUserById(userId)
+      .then((user) => {
+        user.resources = resources;
+        resourceQueries.getMyTags(userId)
+        .then((tags) => {
+          user.tags = tags;
+          res.render("mywall", {user});
+        })
+      })
     })
     .catch((err) => {
       console.log("error during loading my wall resources", err);
@@ -63,22 +73,50 @@ const resourceQueries = require('../db/resource_queries');
     })
   });
 
-// Individual Resource Card
-  router.get("/:resourceId", (req, res) => {
-    const resourceId = req.params.resourceId;
-    resourceQueries.getResourceById(resourceId)
+  //Getting to the new resource creation page
+  router.get("/new", (req, res) => {
+    console.log("accessing get /new path");
+    const userId = req.session.userId;
+    if(!userId) {
+      res.send({message: "not logged in "});
+      //! update with action for redirecting to log in
+      return;
+      }
+    console.log(`user is logged in as ${userId}, continuing w the next task on get/new!`);
+    userQueries.getUserById(userId)
+    .then((user) => {
+      resourceQueries.getMyTags(userId)
+        .then((tags) => {
+          user.tags = tags;
+      res.render("createresource", {user});
+    })
+    })
+  })
+
+  //Getting to the tag specific resource wall page
+  router.get("/tags/:tag", (req, res) => {
+    const userId = req.session.userId;
+    const tag = req.params.tag
+    resourceQueries.getResourceByTag(tag)
     .then((resources) => {
-      //! render single resource page w the returned resource data
-      res.send({resources})
+      userQueries.getUserById(userId)
+      .then((user) => {
+        user.resources = resources;
+        resourceQueries.getMyTags(userId)
+        .then((tags) => {
+          user.tags = tags;
+          res.render(`mywall-${tag}`, {user});
+        })
+      })
     })
     .catch((err) => {
-      console.log("error loading an individual resource data: ", err);
-      res.send(err);
+      console.log("error while getting tag wall", err);
     })
-  });
+  })
+
 
 // Adding a new Resource Card
-  router.post("/", (req, res) => {
+  router.post("/new", (req, res) => {
     const userId = req.session.userId;
     if(!userId) {
     res.send({message: "not logged in "});
@@ -92,13 +130,31 @@ const resourceQueries = require('../db/resource_queries');
       //redirecting it to the single resource page the newly created card
       const resourceId = Number(resource.id);
       console.log("this is the resourceID : ", resourceId);
-      res.redirect(`/resources/${resourceId}`);
+      res.redirect(`/resources/mywall`);
     })
     .catch((err) => {
       console.log("error while posting a new resource card")
       res.send(err);
     })
   });
+// Individual Resource Card
+router.get("/:resourceId", (req, res) => {
+  const userId = req.session.userId;
+  const resourceId = req.params.resourceId;
+  resourceQueries.getResourceById(resourceId)
+  .then((resources) => {
+    //! render single resource page w the returned resource data
+    userQueries.getUserById(userId)
+    .then((user) => {
+      user.resources = resources;
+      res.render("singleresourcepage", {user});
+    })
+  })
+  .catch((err) => {
+    console.log("error loading an individual resource data: ", err);
+    res.send(err);
+  })
+});
 
 // Adding a review to a resource Card
   router.post("/:resourceId", (req, res) => {

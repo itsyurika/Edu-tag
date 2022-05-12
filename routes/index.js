@@ -8,12 +8,26 @@
 const express = require('express');
 const router  = express.Router();
 const userQueries = require('../db/user_queries');
+const resourceQueries = require('../db/resource_queries');
+
 
 router.get("/", (req, res) => {
   const id = req.session.userId
   userQueries.getUserById(id)
   .then((user) => {
-    res.render("index", {user});
+    resourceQueries.getMyTags(id)
+    .then((tags) => {
+      console.log("index route tags: ", tags);
+      user.tags = tags;
+      console.log("index route user after update: ", user);
+      res.render("index", {user});
+    })
+    .catch((err) => {
+      console.log("error while sending the tag to index")
+    })
+  })
+  .catch((err) => {
+    console.log(err);
   })
 });
 

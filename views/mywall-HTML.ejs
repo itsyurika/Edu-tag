@@ -53,47 +53,57 @@
       <%- include('partials/_sidebar'); %>
         <!-- Main Page Division-->
         <div class="col-9" style="margin-left: 22%;">
+<!-- Tag Cards -->
 
-  <div class="create-card" style="width: 40rem; height: 50rem; margin-left:16%;">
+<!-- ROW De-marker (3 cards per row)-->
+<div class="row g-0 row-gap">
+  <!-- Individual Card -->
+  <% let cardCount = -1; %>
+  <% for(let card of user.resources) { %>
+  <%   cardCount ++; %>
+  <%   if (cardCount === 3) { %>
+      <div class="row g-0 row-gap">
+  <%  cardCount = 0;  %>
+  <%      }       %>
+     <div class="col">
+      <div class="card bg-transparent" style="width: 22rem;">
+        <img src="https://image.thum.io/get/auth/58035-115fdddb495b048304a3db114625280a/<%= card.url %>" class="card-img-top resource-img" alt="..." >
+        <div class="card-body">
+          <h5 class="card-title"><%= card.title %></h5>
+          <!-- <p class="card-text"><%- card.description %></p> -->
+          <a href="<%= card.url %>" class="btn btn-primary btn-sm card-link">Link</a>
+          <footer>
+            <div class="icons">
+              <span>
+                <i class="fa fa-heart red ml-3 hover-animation" data-hover-color="red"></i>
+                <span>
+                  <i class="fa-regular fa-star star1"></i>
+                  <i class="fa-regular fa-star star2"></i>
+                  <i class="fa-regular fa-star star3"></i>
+                  <i class="fa-regular fa-star star4"></i>
+                  <i class="fa-regular fa-star star5"></i>
+                </span>
+            </div>
+            <p class="card-comments">Comments <span class="comment-count">6</span></p>
+            <span class="card-avg-rating"><strong>4.5</strong></span>
+            <span>Avg Rating</span>
+            <hr>
+            <span class="card-bottom">
+              <p class="card-subtitle mb-2 text-muted card-tag"><%= card.tag %></p>
+              <a class="card-spl" href="/resources/<%= card.id %>">Card Page</a>
+            </span>
+            </span>
 
-
-  <section id="create-resource">
-
-  <p><h2 class="rainbow">Create a New Resource!</h2></p>
-  <form method="POST" action="/resources/new">
-
-  <span id="title-span"><h4 class="rainbow">Title:</h4>
-    <input name="title" class="create-form rainbow" placeholder="Wikipedia">
-  </span>
-
-  <hr class="rainbow">
-
-  <span id="desc-span"><h5 class="rainbow">Let everyone know what your resource is about:</h5>
-    <textarea name="description" class="create-form desc-text rainbow" style="min-width:500px"></textarea>
-  </span>
-
-  <hr class="rainbow">
-
-  <span id="tag-span"><h5 class="rainbow">Let's add some tags:</h5>
-    <div id="tag-forms">
-    <div class="tag-title rainbow"><p>Tag:   </p><input name="tag" class="tag-form create-form" placeholder="Chemistry"></div>
+          </footer>
+        </div>
+      </div>
     </div>
-  </span>
+<%  } %>
 
-  <hr class="rainbow">
 
-  <span id="url-span"><h5 class="rainbow">Link to your resource:</h5>
-    <input name="url" class="create-form rainbow" value="https://" style="min-width:500px;">
-  </span>
-
-  <hr class="rainbow">
-
-  <div class="create-resource rainbow">
-    <button type="submit" class="btn btn-secondary">Create!</button>
-  </div>
-</form>
-</section>
-
+  <!-- End of Individual Card -->
+</div>
+  <!-- Second Row -->
 </div>
 </div>
 </main>
