@@ -147,6 +147,7 @@ const getReviews = (resourceId) => {
   return db
   .query(queryString, queryValue)
   .then((reviews) => {
+    console.log("returning reviews from getReviews fxn ", reviews.rows)
     return reviews.rows; //returns array of objects which has resource_id, reviewer_id, rating, message, and liked boolean!
   })
   .catch((err) => {

@@ -122,10 +122,12 @@
       alt="...">
       <!-- 'Old' Comments -->
       <!-- Single Comment -->
+      <% for (const review of user.resources.review) { %>
       <section class="spl-comments rainbow">
         <header class="spl-commenter">
           <span class="name-and-pic">
             <!-- <img src="https://i.imgur.com/nlhLi3I.png"> -->
+
             <p class="spl-comment-name">Carl Sagan</p>
           </span>
           <span class="handle">@Starboy</span>
@@ -136,20 +138,10 @@
           mode makes it so easy on the eyes!
         </p>
       </section>
+      <%} %>
+
       <!-- End of Single Comment -->
-      <section class="spl-comments rainbow">
-        <header class="spl-commenter">
-          <span class="name-and-pic">
-            <!-- <img src="https://i.imgur.com/73hZDYK.png"> -->
-            <p class="spl-comment-name">Dmitri Mendeleev</p>
-          </span>
-          <span class="handle">@Mendelevium</span>
-        </header>
-        <hr>
-        <p class="comment-content">
-          Made some good changes on my original design.
-        </p>
-      </section>
+
 
     </div>
 

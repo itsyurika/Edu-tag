@@ -71,9 +71,9 @@ const userQueries = require('../db/user_queries');
       user.tags = [];
       return res.render("index", {user});
     }
-    const promise1 = resourceQueries.getResourceByTag(tag, 15);
-    const promise2 = userQueries.getUserAndTags(id);
-    Promise.all([promise1, promise2])
+    const taggedResourcePromise = resourceQueries.getResourceByTag(tag, 15);
+    const userAndTagsPromise = userQueries.getUserAndTags(id);
+    Promise.all([taggedResourcePromise, userAndTagsPromise])
     .then((result) => {
       const resources = result[0];
       const user = result[1];
@@ -165,25 +165,45 @@ const userQueries = require('../db/user_queries');
 router.get("/:resourceId", (req, res) => {
   const userId = req.session.userId;
   const resourceId = req.params.resourceId;
-  let user;
-  userQueries.getUserById(userId)
-  .then((userData) => {
-    user = userData;
-    return resourceQueries.getResourceById(resourceId);
-  })
-  .then((resources) => {
-    user.resources = resources;
-    return resourceQueries.getMyTags(userId);
-  })
-  .then((tags) => {
-    user.tags = tags;
-    res.render("singleresourcepage", {user});
-  })
+
+  const resourceByIdPromise = resourceQueries.getResourceById(resourceId);
+  const userAndTagsPromise = userQueries.getUserAndTags(userId);
+  const resourceReviewPromise = resourceQueries.getReviews(resourceId);
+  Promise.all([resourceByIdPromise, userAndTagsPromise, resourceReviewPromise])
+  .then((result) => {
+    const resource = result[0];
+    const user = result[1];
+    const review = result[2];
+    user.resources = resource;
+    console.log("rendering review: ", review);
+    user.resources.review = review;
+    console.log("rendring user object : ", user);
+    res.render('singleresourcepage', {user})
   .catch((err) => {
-    console.log("error loading an individual resource data: ", err);
+    console.log("error loading individual resource page: ", err);
     res.send(err);
   })
+  // let user;
+  // userQueries.getUserById(userId)
+  // .then((userData) => {
+  //   user = userData;
+  //   return resourceQueries.getResourceById(resourceId);
+  // })
+  // .then((resources) => {
+  //   user.resources = resources;
+  //   return resourceQueries.getMyTags(userId);
+  // })
+  // .then((tags) => {
+  //   user.tags = tags;
+  //   res.render("singleresourcepage", {user});
+  // })
+  // .catch((err) => {
+  //   console.log("error loading an individual resource data: ", err);
+  //   res.send(err);
+  })
 });
+
+
 
 // Adding a review to a resource Card
   router.post("/:resourceId", (req, res) => {

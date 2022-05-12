@@ -23,21 +23,24 @@ router.get("/", (req, res) => {
     res.render("index", { user });
     });
   }
-  userQueries.getUserAndTags(id)
-  .then((userObj) => {
-    console.log("rendering index from getUserAndTags: ", userObj);
-    user = userObj;
-  })
-  .then(() => {
-    if(!user.resources){
-      resourceQueries.getAllResources()
-      .then(resources => {
-        user.resources = resources;
-        console.log("rendering user obj to a user who exists after adding resource:", user);
-        res.render("index", { user });
-      })
-    }
-  })
+  if(id) {
+
+    userQueries.getUserAndTags(id)
+    .then((userObj) => {
+      console.log("rendering index from getUserAndTags: ", userObj);
+      user = userObj;
+    })
+    .then(() => {
+      if(!user.resources){
+        resourceQueries.getAllResources()
+        .then(resources => {
+          user.resources = resources;
+          console.log("rendering user obj to a user who exists after adding resource:", user);
+          res.render("index", { user });
+        })
+      }
+    })
+  }
   });
 
 module.exports = router;
