@@ -73,14 +73,12 @@
             <a href="<%- user.resources.url %>" class="btn btn-secondary btn spl-link rainbow">Link</a><span class="rainbow"
               id="spl-link-addy"><%- user.resources.url %></span>
             <div class="icons">
-              <span>
-                <label id="heart-label">
-                  <input type="checkbox">
-                  <i class="far fa-heart"></i>
-                  <i class="fas fa-heart heart_checked"></i>
-                </label>
+                <span class="heart-icon rainbow">
+                <input id="heart" type="checkbox" />
+                <label for="heart">❤</label>
+                <p id="like-icon">Like!</p>
                 <span>
-                  <form class="rainbow" action="" method="POST">
+                  <form class="rainbow star-rating action="" method="POST">
                     <label for="star-1"><p style="font-size:15px">1</p></label>
                     <input type="radio" class="star-input" name="rating" id="star-1" value="1">
                     <!-- <label for="star-1" class="star"><i class="fas fa-star"></i></label> -->
