@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(){
         document.body.style.paddingTop = '0';
       }
 
-
+    });
 
   $(".login-btn").on("click", function() {
     loginDropDown();
@@ -53,16 +53,6 @@ document.addEventListener("DOMContentLoaded", function(){
   $(".register-btn").on("click", function() {
     registerDropDown();
   });
-
-
-  //  $('.rate-button').submit(function(e) {
-  //    e.preventDefault();
-  //  })
-
-});
-
-
-
 
 
 

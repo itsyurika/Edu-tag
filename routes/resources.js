@@ -61,13 +61,18 @@ const userQueries = require('../db/user_queries');
   })
 
 //  Tag Search
-  router.get("/", (req, res) => {
-    // whether a user is logged in or not, /resources page will show the popular / highest rating resources
-    const {searchTag} = req.body; //? or use req.query?
-    resourceQueries.getResourceByTag(searchTag, 15)
+  router.get("/search", (req, res) => {
+    const tag = req.query.tag;
+    const userId = req.session.userId;
+    let user = {};
+    if(userId) {
+      userQueries.getUserById(userId)
+      .then((userObj) => user = userObj)
+    }
+    resourceQueries.getResourceByTag(tag, 15)
     .then((resources) => {
-      //! render the main body with all the resources returned
-      res.send({resources})
+      user.resources = resources;
+      res.render(`search-${tag}`);
     })
     .catch((err) => {
       console.log("error after search and loading resources related to the search tag: ", err);
@@ -95,7 +100,7 @@ const userQueries = require('../db/user_queries');
     })
   })
 
-  //Getting to the tag specific resource wall page
+  //Getting to the tag specific resource wall page made by user
   router.get("/tags/:tag", (req, res) => {
     const userId = req.session.userId;
     const tag = req.params.tag
@@ -116,7 +121,6 @@ const userQueries = require('../db/user_queries');
       console.log("error while getting tag wall", err);
     })
   })
-
 
 // Adding a new Resource Card
   router.post("/new", (req, res) => {

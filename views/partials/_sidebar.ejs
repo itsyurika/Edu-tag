@@ -41,7 +41,7 @@
                 <ul class="list-unstyled">
                   <ul>
                     <%  for (tags of user.tags) {      %>
-                   <li><a class="my-tags-sidebar" href="/resources/tags/<%= tags.tag %>"</a><%= tags.tag %></li>
+                   <li><a class="my-tags-sidebar" href="/resources/mytags/<%= tags.tag %>"</a><%= tags.tag %></li>
                     <% } %>
 
                   </ul>
@@ -66,7 +66,7 @@
             </li>
           </ul>
           <hr>
-          <form action="/users/logout" class="logout-button" method="POST">
+          <form action="/users/logout" class="logout-button" method="GET">
             <button type="submit" class="btn btn-outline-light logout">Logout</button>
           </form>
 

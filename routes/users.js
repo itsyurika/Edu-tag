@@ -45,7 +45,7 @@ const resourceQueries = require('../db/resource_queries');
   // });
 
   //Logout
-  router.post("/logout", (req, res) => {
+  router.get("/logout", (req, res) => {
     console.log("logout");
     req.session.userId = null;
     // res.send("you've logged out");
@@ -71,8 +71,6 @@ const resourceQueries = require('../db/resource_queries');
       res.status(500).json({error_occurred: err.message});
     })
   });
-
-
 
   //Create a new user
   router.post("/register", (req, res) => {

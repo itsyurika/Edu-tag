@@ -8,5 +8,5 @@ VALUES ('Alice', 'alice@email.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/F
 ('Carmelo', 'Janice83@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
 ('Zoie', 'Amelie57@yahoo.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
 ('Clair', 'Vidal_Sipes@yahoo.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'),
-('Dalton', 'Fanny.Deckow43@hotmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u');
+('Dalton', 'Fanny.Deckow43@hotmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'), ('Carl Sagan', 'starboy@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u'), ('Dmitri Mendeleev', 'mendelevium@gmail.com', '$2b$12$XnBTzEDa4LHekT7u4Mb4SuHrVIFJh69coC/FjILiJ3.gqazrawk7u');
 
