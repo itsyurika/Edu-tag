@@ -171,9 +171,15 @@ nav {
 	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
-.logout {
-  width: 180px;
-  align-items: center;
+// .logout {
+//   width: 180px;
+//   align-items: center;
+// }
+
+.logout-button {
+  display: flex;
+  justify-content: center;
+
 }
 
 .my-tags-sidebar {
