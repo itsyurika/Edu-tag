@@ -34,7 +34,7 @@ nav {
 }
 
 .search-form {
-  margin-right: 5px;
+  margin-right: 20px;
 }
 
 #search-button {
@@ -118,19 +118,6 @@ nav {
   float: right;
 }
 
-// .fa-heart:hover {
-//   transform-origin: 50% 50%;
-//   animation: pulse 2000ms;
-// }
-
-.fa-star {
-  color: gold;
-}
-
-.fa-star:hover {
-  animation: rotation 0.5s linear;
-}
-
 .login-dd {
   width: 100%;
   height: 80px;
@@ -138,7 +125,6 @@ nav {
   display: flex;
   justify-content: space-between;
   position: fixed;
-  display: none;
   z-index: 20;
 
 }
@@ -157,8 +143,9 @@ nav {
 
 .email-password {
   min-width: 400px;
-
 }
+
+
 
 .user-email-password {
   min-width: 300px;

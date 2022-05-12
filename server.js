@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 // app.use(express.static("public"));
-app.use(express.static(path.join(__dirname, '/public')));
+
 
 // import the db
 
@@ -35,6 +35,8 @@ app.use(
     isSass: false, // false => scss, true => sass
   })
 );
+
+app.use(express.static(path.join(__dirname, '/public')));
 
 //cookie session set up
 app.use(express.json());
