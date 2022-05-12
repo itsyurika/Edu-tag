@@ -72,6 +72,8 @@
           <h3>
             <a href="<%- user.resources.url %>" class="btn btn-secondary btn spl-link rainbow">Link</a><span class="rainbow"
               id="spl-link-addy"><%- user.resources.url %></span>
+              <form method="POST" action="/resources/<%=user.resources.id%>">
+
             <div class="icons">
                 <span class="heart-icon rainbow">
                 <input id="heart" type="checkbox" />
@@ -89,18 +91,17 @@
             </div>
             <!-- <span class="card-avg-rating rainbow">4.5</span>
             <span class="rainbow">Avg Rating</span> -->
+            <div class="spl-comment-form rainbow">
 
+                <textarea name="text" id="comment-text"></textarea>
+                <div class="comment-submit">
+                  <button type="submit" class="btn btn-secondary rainbow">Comment</button>
+                </div>
+
+              </div>
+            </form>
       </div>
-      <div class="spl-comment-form rainbow">
-        <form method="POST" action="/resources/<%=user.resources.id%>">
 
-          <textarea name="text" id="comment-text"></textarea>
-          <div class="comment-submit">
-            <button type="submit" class="btn btn-secondary rainbow">Comment</button>
-          </div>
-        </form>
-
-      </div>
     </div>
     <!-- Rightside of Card -->
     <div class="spl-comment-body">
