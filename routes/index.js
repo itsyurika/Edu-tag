@@ -14,7 +14,7 @@ const resourceQueries = require('../db/resource_queries');
 router.get("/", (req, res) => {
   const id = req.session.userId;
   let user = {};
-  if (!id) {
+  if(!id) {
     user.tags = [];
     resourceQueries.getAllResources()
     .then(resources => {
@@ -24,7 +24,6 @@ router.get("/", (req, res) => {
     });
   }
   if(id) {
-
     userQueries.getUserAndTags(id)
     .then((userObj) => {
       console.log("rendering index from getUserAndTags: ", userObj);
