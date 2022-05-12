@@ -6,39 +6,40 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const userQueries = require('../db/user_queries');
 const resourceQueries = require('../db/resource_queries');
+const { user } = require('pg/lib/defaults');
 
 
 router.get("/", (req, res) => {
-  const id = req.session.userId
-  if(!id) {
-    const user = {};
+  const id = req.session.userId;
+  let user = {};
+  if (!id) {
     user.tags = [];
-    res.render("index", {user});
+    resourceQueries.getAllResources()
+    .then(resources => {
+      user.resources = resources;
+      console.log("rendering user obj after adding resource:", user);
+    res.render("index", { user });
+
+    });
   }
   userQueries.getUserAndTags(id)
-  .then((user) => {
-    console.log("rendering index from getUserAndTags: ", user);
-    res.render("index", {user});
+  .then((userObj) => {
+    console.log("rendering index from getUserAndTags: ", userObj);
+    user = userObj;
   })
-  // userQueries.getUserById(id)
-  // .then((user) => {
-  //   resourceQueries.getMyTags(id)
-  //   .then((tags) => {
-  //     console.log("index route tags: ", tags);
-  //     user.tags = tags;
-  //     console.log("index route user after update: ", user);
-  //     res.render("index", {user});
-  //   })
-  //   .catch((err) => {
-  //     console.log("error while sending the tag to index")
-  //   })
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // })
-});
+  .then(() => {
+    if(!user.resources){
+      resourceQueries.getAllResources()
+      .then(resources => {
+        user.resources = resources;
+        console.log("rendering user obj to a user who exists after adding resource:", user);
+        res.render("index", { user });
+      })
+    }
+  })
+  });
 
 module.exports = router;

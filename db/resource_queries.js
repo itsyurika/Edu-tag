@@ -1,6 +1,23 @@
 const db = require('./db_connect');
 
 /**
+ *
+ * @returns array of all resource objects
+ */
+const getAllResources = () => {
+  const queryString = `SELECT * FROM resources ORDER BY create_date DESC;`;
+  return db
+  .query(queryString)
+  .then((resources) => {
+    console.log("getting all resources");
+    return resources.rows;
+  })
+  .catch((err) => {
+    console.log("error while executing getMyResources fxn: ", err);
+  })
+}
+
+/**
  * Fetches all resources that is created by the current user
  * @param {INTEGER} creator_id
  * @param {INTEGER} limit
@@ -159,6 +176,7 @@ const getMyTags = (userId) => {
 
 module.exports = {
   //list all the functions here
+  getAllResources,
   getMyResources,
   getLikedResources,
   getResourceByTag,
