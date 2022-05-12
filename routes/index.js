@@ -9,7 +9,6 @@ const express = require('express');
 const router = express.Router();
 const userQueries = require('../db/user_queries');
 const resourceQueries = require('../db/resource_queries');
-const { user } = require('pg/lib/defaults');
 
 
 router.get("/", (req, res) => {
@@ -22,7 +21,6 @@ router.get("/", (req, res) => {
       user.resources = resources;
       console.log("rendering user obj after adding resource:", user);
     res.render("index", { user });
-
     });
   }
   userQueries.getUserAndTags(id)

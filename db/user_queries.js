@@ -51,6 +51,7 @@ const getUserAndTags = function (id) {
   .then(user => {
     return resourceQueries.getMyTags(id)
     .then(tags => {
+      console.log("loading tags from login: ", tags);
       user.tags = tags;
       return user;
     })
