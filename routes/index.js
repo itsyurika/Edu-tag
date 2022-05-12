@@ -18,22 +18,27 @@ router.get("/", (req, res) => {
     user.tags = [];
     res.render("index", {user});
   }
-  userQueries.getUserById(id)
+  userQueries.getUserAndTags(id)
   .then((user) => {
-    resourceQueries.getMyTags(id)
-    .then((tags) => {
-      console.log("index route tags: ", tags);
-      user.tags = tags;
-      console.log("index route user after update: ", user);
-      res.render("index", {user});
-    })
-    .catch((err) => {
-      console.log("error while sending the tag to index")
-    })
+    console.log("rendering index from getUserAndTags: ", user);
+    res.render("index", {user});
   })
-  .catch((err) => {
-    console.log(err);
-  })
+  // userQueries.getUserById(id)
+  // .then((user) => {
+  //   resourceQueries.getMyTags(id)
+  //   .then((tags) => {
+  //     console.log("index route tags: ", tags);
+  //     user.tags = tags;
+  //     console.log("index route user after update: ", user);
+  //     res.render("index", {user});
+  //   })
+  //   .catch((err) => {
+  //     console.log("error while sending the tag to index")
+  //   })
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // })
 });
 
 module.exports = router;

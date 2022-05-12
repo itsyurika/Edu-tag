@@ -1,5 +1,6 @@
 const db = require('./db_connect');
 const bcrypt = require('bcrypt');
+const resourceQueries = require('./resource_queries');
 
 
 const getAllUsers = () => {
@@ -44,6 +45,18 @@ const getUserById = function(id) {
       return null;
     });
 };
+
+const getUserAndTags = function (id) {
+  return getUserById(id)
+  .then(user => {
+    return resourceQueries.getMyTags(id)
+    .then(tags => {
+      user.tags = tags;
+      return user;
+    })
+  })
+}
+
 
 /**
  * Fetches a specific user using the user name handle. Uses req.params and should be used to redirect to the requested user's wall page.
@@ -134,6 +147,7 @@ module.exports = {
   getUserByEmail,
   getUserById,
   getUserByName,
+  getUserAndTags,
   addUser,
   login,
   editProfile

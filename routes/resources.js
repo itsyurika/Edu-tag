@@ -64,21 +64,37 @@ const userQueries = require('../db/user_queries');
   router.get("/search", (req, res) => {
     const tag = req.query.q;
     console.log("tag : ", tag);
-    const userId = req.session.userId;
-    let user = {};
-    if(userId) {
-      userQueries.getUserById(userId)
-      .then((userObj) => user = userObj)
+    const id = req.session.userId
+
+    if(!id) {
+      const user = {};
+      user.tags = [];
+      return res.render("index", {user});
     }
-    resourceQueries.getResourceByTag(tag, 15)
-    .then((resources) => {
+    const promise1 = resourceQueries.getResourceByTag(tag, 15);
+    const promise2 = userQueries.getUserAndTags(id);
+    Promise.all([promise1, promise2])
+    .then((result) => {
+      const resources = result[0];
+      const user = result[1];
       user.resources = resources;
-      res.render(`search-${tag}`);
+      console.log("results from promiseall ", result);
+      res.render("index", {user});
     })
-    .catch((err) => {
-      console.log("error after search and loading resources related to the search tag: ", err);
-      res.send(err);
-    })
+    // let user = {};
+    // if(userId) {
+    //   userQueries.getUserById(userId)
+    //   .then((userObj) => user = userObj)
+    // }
+
+    // .then((resources) => {
+    //   user.resources = resources;
+    //   res.render("index", );
+    // })
+    // .catch((err) => {
+    //   console.log("error after search and loading resources related to the search tag: ", err);
+    //   res.send(err);
+    // })
   });
 
   //Getting to the new resource creation page
