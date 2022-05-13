@@ -44,7 +44,7 @@ const getMyResources = (creator_id, limit = 15) => {
  * @returns a promise with an array of resource objects that matches liked_resources.user_id = userId
  */
 const getLikedResources = (userId, limit = 15) => {
-  const queryString = `SELECT resources.* FROM resources JOIN liked_resources ON liked_resources.resource_id = resources.id JOIN users ON liked_resources.user_id = users.id WHERE liked_resources.user_id = $1 ORDER BY create_date DESC LIMIT $2;`;
+  const queryString = `SELECT DISTINCT(resources.*), resources_reviews.rating AS rating FROM resources JOIN resources_reviews ON resources_reviews.resource_id = resources.id JOIN users ON resources_reviews.reviewer_id = users.id WHERE resources_reviews.reviewer_id = $1 GROUP BY resources.id, resources_reviews.rating ORDER BY create_date DESC LIMIT $2;`;
   const queryValue = [userId, limit]
   return db
   .query(queryString, queryValue)
@@ -118,40 +118,83 @@ const addResource = (resourceData) => {
 };
 
 /**
- * Adds a review to a single resource object
- * @param {{}} reviewData an object containing all of the review details
- * @returns {promise<{}>} a promise with resources_reviews object (NOT AN ARRAY!)
- */
-const addReview = (reviewData) => {
-  const queryString = `INSERT INTO resources_reviews (rating, message, liked, resource_id, reviewer_id) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
-  const queryValue = Object.values(reviewData);
-
-  return db
-  .query(queryString, queryValue)
-  .then((review) => {
-    return review.rows[0];
-  })
-  .catch((err) => {
-    console.log("error while adding a Review :", err);
-  })
-}
-
-/**
  * Fetches all reviews of a specific resource
  * @param {INTEGER} resourceId
  * @returns a promise with an ARRAY of review objects for that specific resource with resource id.
  */
-const getReviews = (resourceId) => {
+ const getReviews = (resourceId) => {
   const queryString = `SELECT resources_reviews.*, users.name AS reviewer_name FROM resources_reviews JOIN users ON users.id = resources_reviews.reviewer_id WHERE resource_id = $1;`;
   const queryValue = [resourceId];
   return db
   .query(queryString, queryValue)
   .then((reviews) => {
-    console.log("returning reviews from getReviews fxn ", reviews.rows)
     return reviews.rows; //returns array of objects which has resource_id, reviewer_id, rating, message, and liked boolean!
   })
   .catch((err) => {
     console.log("error while getting reviews of a specific resource: ", err);
+  })
+}
+
+/**
+ * Adds a review to a single resource object
+ * @param {{}} reviewData an object containing all of the review details
+ * @returns {promise<{}>} a promise with resources_reviews object (NOT AN ARRAY!)
+ */
+
+const reviewExists = (reviewData) => {
+    const checkString = `SELECT resources_reviews.* FROM resources_reviews JOIN users ON users.id = resources_reviews.reviewer_id WHERE resource_id = $4 AND reviewer_id = $5;`;
+  const queryValue = Object.values(reviewData);
+  return db
+  .query(checkString, queryValue)
+  .then((review) => {
+    console.log("return value from check review exists fxn: ", review);
+    return review;
+  })
+  .catch((err) => {
+    console.log("error while executing review Exists fxn :", err);
+  })
+}
+const addReview = (reviewData) => {
+  const queryValue = Object.values(reviewData);
+  let queryString = ``;
+  reviewExists(reviewData)
+  .then((review) => {
+    console.log("vlaue of review at addReview after receiving result from review Exsits: ", review);
+    if(review) {
+      console.log("review exists - updating");
+      queryString = `UPDATE resources_reviews SET liked = $1, rating = $2, message = $3 WHERE resouce_id = $4 AND reviewer_id = $5;`
+      return db
+    .query(queryString, queryValue)
+    .then((review) => {
+    console.log("review received:", review.rows)
+    return review.rows[0];
+    })
+    .catch((err) => {
+    console.log("error while adding a Review :", err);
+    })
+    } else {
+      console.log("review is new");
+      queryString = `INSERT INTO resources_reviews (liked, rating, message, resource_id, reviewer_id) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
+      return db
+    .query(queryString, queryValue)
+    .then((review) => {
+    console.log("review received:", review.rows)
+    return review.rows[0];
+    })
+    .catch((err) => {
+    console.log("error while adding a Review :", err);
+    })
+    }
+  })
+
+  return db
+  .query(queryString, queryValue)
+  .then((review) => {
+    console.log("review received:", review.rows)
+    return review.rows[0];
+  })
+  .catch((err) => {
+    console.log("error while adding a Review :", err);
   })
 }
 
