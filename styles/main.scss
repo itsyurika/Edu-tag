@@ -84,19 +84,26 @@ nav {
   margin-top: 5px;
 }
 
-
-.card-bottom {
-  display: inline;
-  align-content: center;
+.card-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
 }
+
+// .card-bottom {
+//   display: inline;
+//   align-content: center;
+// }
 
 .card-link {
   float: right;
+
 }
 
 .card-bottom {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 .red {
