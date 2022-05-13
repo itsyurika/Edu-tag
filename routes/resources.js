@@ -6,6 +6,7 @@
  */
 
 const express = require('express');
+const { parse } = require('pg-protocol');
 const router  = express.Router();
 const resourceQueries = require('../db/resource_queries');
 const userQueries = require('../db/user_queries');
@@ -45,14 +46,14 @@ const userQueries = require('../db/user_queries');
       res.redirect('/');
       return;
       }
-    resourceQueries.getLikedResources(userId, 15)
-    .then((resources) => {
-      resourceQueries.getMyTags(userId)
-      .then((tags) => {
-        const user = {id: userId, tags: tags};
-        user.resources = resources;
-        res.render("mylikes",{user});
-      })
+    const userAndTagsPromise = userQueries.getUserAndTags(userId);
+    const likedResourcesPromise = resourceQueries.getLikedResources(userId, 15);
+    Promise.all([likedResourcesPromise, userAndTagsPromise])
+    .then((result) => {
+      const resources = result[0];
+      const user = result[1];
+      user.resources = resources;
+      res.render("mylikes", {user})
     })
     .catch((err) => {
       console.log("error during loding my liked resources ", err);
@@ -121,18 +122,16 @@ const userQueries = require('../db/user_queries');
   router.get("/tags/:tag", (req, res) => {
     const userId = req.session.userId;
     const tag = req.params.tag
-    resourceQueries.getResourceByTag(tag)
-    .then((resources) => {
-      console.log("all the resouces searched by tag: ", resources);
-      userQueries.getUserById(userId)
-      .then((user) => {
-        user.resources = resources;
-        resourceQueries.getMyTags(userId)
-        .then((tags) => {
-          user.tags = tags;
-          res.render(`mywall-${tag}`, {user});
-        })
-      })
+
+    const taggedResourcePromise = resourceQueries.getMyResourcesByTag(userId, tag, 15);
+    const userAndTagsPromise = userQueries.getUserAndTags(userId);
+    Promise.all([taggedResourcePromise, userAndTagsPromise])
+    .then((result) => {
+      const resources = result[0];
+      const user = result[1];
+      user.resources = resources;
+      console.log("results from promiseall ", result);
+      res.render("index", {user});
     })
     .catch((err) => {
       console.log("error while getting tag wall", err);
@@ -175,9 +174,7 @@ router.get("/:resourceId", (req, res) => {
     const user = result[1];
     const review = result[2];
     user.resources = resource;
-    console.log("rendering review: ", review);
     user.resources.review = review;
-    console.log("rendring user object : ", user);
     res.render('singleresourcepage', {user})
   })
   .catch((err) => {
@@ -200,9 +197,18 @@ router.get("/:resourceId", (req, res) => {
     return;
     }
     console.log(`user is logged in as ${userId}, continuing w the next task`);
+
+    parseInt(req.body.rating)
+    if (req.body.liked === 'true') {
+      req.body.liked = true;
+    } else {
+      req.body.liked = false;
+    }
+    console.log("review inbound:", req.body)
     resourceQueries.addReview({...req.body, resource_id: resourceId, reviewer_id: userId})
-    .then((review) => {
-      console.log("passing the review on the post route: ", review);
+
+    .then((resource) => {
+
       //receives the resources_reviews object!
       // const reviewedResourcesId = resource.id;
       res.redirect(`/resources/${resourceId}`);

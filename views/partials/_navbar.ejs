@@ -18,7 +18,7 @@
           <li class="nav-item">
             <a class="nav-link active register-btn" href="#">Register</a>
           </li>
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
               Order By
@@ -30,7 +30,7 @@
               <li><a class="dropdown-item" href="#">Title</a></li>
 
             </ul>
-          </li>
+          </li> -->
         </ul>
 
         <form class="d-flex" method="GET" action="/search">
@@ -55,10 +55,10 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
             <!-- User Logged in Specific Code -->
-              <a class="nav-link active nav-user" aria-current="page" href="#">Hello! <%= user.name%></a>
+              <a class="nav-link active nav-user" aria-current="page" href="#">Hello <%= user.name%>!</a>
             </li>
             <!--End of User Logged in Specific Code -->
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Order By
@@ -70,7 +70,7 @@
                 <li><a class="dropdown-item dd_title" href="#">Title</a></li>
                 <li><a class="dropdown-item my_rating" href="#">My Rating</a></li>
               </ul>
-            </li>
+            </li> -->
           </ul>
 
           <form class="d-flex" method="GET" action="/resources/search">

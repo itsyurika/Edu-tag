@@ -1,4 +1,4 @@
-
+let heartVal;
 // Client facing scripts here
 
 const loginDropDown = function() {
@@ -27,6 +27,17 @@ const registerDropDown = function() {
   }
 };
 
+
+const checkHeart = function() {
+
+  if($('#heart').is('checked')) {
+    heartVal = true;
+    return hearVal;
+  }
+  heartVal = false;
+  return heartVal;
+}
+
 document.addEventListener("DOMContentLoaded", function(){
 
   $('.login-dd').hide();
@@ -54,7 +65,9 @@ document.addEventListener("DOMContentLoaded", function(){
     registerDropDown();
   });
 
-
+  $("#heart").on('click', function() {
+    checkHeart()
+  });
 
 
 

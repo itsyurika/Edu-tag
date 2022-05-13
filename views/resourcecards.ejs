@@ -13,7 +13,7 @@
         <p class="card-text"><%=resource.description%></p>
         <a href="<%=resource.url%>" class="btn btn-primary btn-sm card-link">Link!</a>
         <footer>
-          <div class="icons">
+          <!-- <div class="icons">
             <span>
               <i class="fa fa-heart red ml-3 hover-animation" data-hover-color="red"></i>
               <span>
@@ -23,13 +23,13 @@
                 <i class="fa-regular fa-star star4"></i>
                 <i class="fa-regular fa-star star5"></i>
               </span>
-          </div>
-          <p class="card-comments">Comments <span class="comment-count">6</span></p>
-          <span class="card-avg-rating"><strong>4.5</strong></span>
-          <span>Avg Rating</span>
+          </div> -->
+          <!-- <p class="card-comments">Comments <span class="comment-count">6</span></p> -->
+          <!-- <span class="card-avg-rating"><strong>4.5</strong></span>
+          <span>Avg Rating</span> -->
           <hr>
           <span class="card-bottom">
-            <p class="card-subtitle mb-2 text-muted card-tag">Chemistry</p>
+            <p class="card-subtitle mb-2 card-tag"><%= resource.tag %></p>
             <a class="card-spl" href="/resources/<%=resource.id%>">Card Page</a>
           </span>
           </span>
