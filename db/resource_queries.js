@@ -123,7 +123,7 @@ const addResource = (resourceData) => {
  * @returns {promise<{}>} a promise with resources_reviews object (NOT AN ARRAY!)
  */
 const addReview = (reviewData) => {
-  const queryString = `INSERT INTO resources_reviews (rating, message, liked, resource_id, reviewer_id) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
+  const queryString = `INSERT INTO resources_reviews (liked, rating, message, resource_id, reviewer_id) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
   const queryValue = Object.values(reviewData);
 
   return db

@@ -193,6 +193,7 @@ router.get("/:resourceId", (req, res) => {
   router.post("/:resourceId", (req, res) => {
     const userId = req.session.userId;
     const resourceId = req.params.resourceId;
+    console.log("logging req.body: " , req.body);
     if(!userId) {
     res.send({message: "not logged in "});
     //! update with action for redirecting to log in
@@ -200,7 +201,8 @@ router.get("/:resourceId", (req, res) => {
     }
     console.log(`user is logged in as ${userId}, continuing w the next task`);
     resourceQueries.addReview({...req.body, resource_id: resourceId, reviewer_id: userId})
-    .then((resource) => {
+    .then((review) => {
+      console.log("passing the review on the post route: ", review);
       //receives the resources_reviews object!
       // const reviewedResourcesId = resource.id;
       res.redirect(`/resources/${resourceId}`);
