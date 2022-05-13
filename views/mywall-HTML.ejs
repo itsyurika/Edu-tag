@@ -72,27 +72,13 @@
         <div class="card-body">
           <h5 class="card-title"><%= card.title %></h5>
           <!-- <p class="card-text"><%- card.description %></p> -->
-          <a href="<%= card.url %>" class="btn btn-primary btn-sm card-link">Link</a>
+
           <footer>
-            <!-- <div class="icons">
-              <span>
-                <i class="fa fa-heart red ml-3 hover-animation" data-hover-color="red"></i>
-                <span>
-                  <i class="fa-regular fa-star star1"></i>
-                  <i class="fa-regular fa-star star2"></i>
-                  <i class="fa-regular fa-star star3"></i>
-                  <i class="fa-regular fa-star star4"></i>
-                  <i class="fa-regular fa-star star5"></i>
-                </span>
-            </div> -->
-            <!-- <p class="card-comments">Comments <span class="comment-count">6</span></p> -->
-            <!-- <span class="card-avg-rating"><strong>4.5</strong></span>
-            <span>Avg Rating</span> -->
             <hr>
             <span class="card-bottom">
               <p class="card-subtitle mb-2 card-tag"><%= card.tag %></p>
               <a class="card-spl" href="/resources/<%= card.id %>">Card Page</a>
-            </span>
+              <a href="<%= card.url %>" class="btn btn-primary btn-sm card-link">Link</a>
             </span>
 
           </footer>
